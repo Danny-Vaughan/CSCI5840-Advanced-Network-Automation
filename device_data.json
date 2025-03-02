@@ -1,0 +1,219 @@
+[
+{
+    "device": {
+        "name": "R1",
+        "management_ip_used": "20.20.20.1",
+        "interfaces": {
+            "FastEthernet0/0": {
+                "status": "down",
+                "ipv4_addresses": []
+            },
+            "FastEthernet1/0": {
+                "status": "up",
+                "ipv4_addresses": [
+                    "20.20.20.1"
+                ]
+            },
+            "FastEthernet1/1": {
+                "status": "down",
+                "ipv4_addresses": []
+            },
+            "FastEthernet2/0": {
+                "status": "down",
+                "ipv4_addresses": []
+            },
+            "FastEthernet2/1": {
+                "status": "down",
+                "ipv4_addresses": []
+            },
+            "GigabitEthernet3/0": {
+                "status": "down",
+                "ipv4_addresses": []
+            },
+            "VoIP-Null0": {
+                "status": "up",
+                "ipv4_addresses": []
+            },
+            "Null0": {
+                "status": "up",
+                "ipv4_addresses": []
+            }
+        }
+    }
+},
+{
+    "device": {
+        "name": "R2",
+        "management_ip_used": "10.10.10.252",
+        "interfaces": {
+            "FastEthernet0/0": {
+                "status": "up",
+                "ipv4_addresses": [
+                    "10.10.10.252"
+                ]
+            },
+            "FastEthernet1/0": {
+                "status": "up",
+                "ipv4_addresses": [
+                    "20.20.20.2"
+                ]
+            },
+            "FastEthernet1/1": {
+                "status": "down",
+                "ipv4_addresses": []
+            },
+            "FastEthernet2/0": {
+                "status": "down",
+                "ipv4_addresses": []
+            },
+            "FastEthernet2/1": {
+                "status": "down",
+                "ipv4_addresses": []
+            },
+            "GigabitEthernet3/0": {
+                "status": "down",
+                "ipv4_addresses": []
+            },
+            "VoIP-Null0": {
+                "status": "up",
+                "ipv4_addresses": []
+            },
+            "Null0": {
+                "status": "up",
+                "ipv4_addresses": []
+            }
+        }
+    }
+},
+{
+    "device": {
+        "name": "R3",
+        "management_ip_used": "10.10.10.253",
+        "interfaces": {
+            "FastEthernet0/0": {
+                "status": "up",
+                "ipv4_addresses": [
+                    "10.10.10.253"
+                ]
+            },
+            "FastEthernet1/0": {
+                "status": "up",
+                "ipv4_addresses": [
+                    "20.20.20.3"
+                ]
+            },
+            "FastEthernet1/1": {
+                "status": "down",
+                "ipv4_addresses": []
+            },
+            "FastEthernet2/0": {
+                "status": "down",
+                "ipv4_addresses": []
+            },
+            "FastEthernet2/1": {
+                "status": "down",
+                "ipv4_addresses": []
+            },
+            "GigabitEthernet3/0": {
+                "status": "down",
+                "ipv4_addresses": []
+            },
+            "VoIP-Null0": {
+                "status": "up",
+                "ipv4_addresses": []
+            },
+            "Null0": {
+                "status": "up",
+                "ipv4_addresses": []
+            }
+        }
+    }
+},
+{
+    "device": {
+        "name": "R4",
+        "management_ip_used": "198.51.100.1",
+        "interfaces": {
+            "FastEthernet0/0": {
+                "status": "up",
+                "ipv4_addresses": [
+                    "10.10.10.1"
+                ]
+            },
+            "FastEthernet1/0": {
+                "status": "up",
+                "ipv4_addresses": [
+                    "198.51.100.1"
+                ]
+            },
+            "FastEthernet1/1": {
+                "status": "down",
+                "ipv4_addresses": []
+            },
+            "FastEthernet2/0": {
+                "status": "down",
+                "ipv4_addresses": []
+            },
+            "FastEthernet2/1": {
+                "status": "down",
+                "ipv4_addresses": []
+            },
+            "GigabitEthernet3/0": {
+                "status": "down",
+                "ipv4_addresses": []
+            },
+            "VoIP-Null0": {
+                "status": "up",
+                "ipv4_addresses": []
+            },
+            "Null0": {
+                "status": "up",
+                "ipv4_addresses": []
+            }
+        }
+    }
+},
+{
+    "device": {
+        "name": "R5",
+        "management_ip_used": "10.10.10.254",
+        "interfaces": {
+            "FastEthernet0/0": {
+                "status": "up",
+                "ipv4_addresses": [
+                    "10.10.10.254"
+                ]
+            },
+            "FastEthernet1/0": {
+                "status": "down",
+                "ipv4_addresses": []
+            },
+            "FastEthernet1/1": {
+                "status": "down",
+                "ipv4_addresses": []
+            },
+            "FastEthernet2/0": {
+                "status": "down",
+                "ipv4_addresses": []
+            },
+            "FastEthernet2/1": {
+                "status": "down",
+                "ipv4_addresses": []
+            },
+            "GigabitEthernet3/0": {
+                "status": "down",
+                "ipv4_addresses": []
+            },
+            "VoIP-Null0": {
+                "status": "up",
+                "ipv4_addresses": []
+            },
+            "Null0": {
+                "status": "up",
+                "ipv4_addresses": []
+            }
+        }
+    }
+},
+
+]
