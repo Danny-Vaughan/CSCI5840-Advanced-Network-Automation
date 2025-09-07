@@ -1,0 +1,11 @@
+FROM ubuntu:22.04
+ENV DEBIAN_FRONTEND=noninteractive
+RUN apt-get update && apt-get install -y iputils-ping curl iproute2 vim openssh-client snmp python3 python3-pip tcpdump net-tools rsyslog logrotate gnmic wget tar
+RUN pip3 install netmiko napalm ncclient pyshark jinja2
+RUN mkdir -p /opt/prometheus /opt/grafana /opt/snmp_exporter
+RUN mkdir -p /var/log/arista && chown syslog:adm /var/log/arista
+COPY arista.conf /etc/rsyslog.d/30-arista.conf
+WORKDIR /opt
+RUN wget https://github.com/prometheus/prometheus/releases/download/v0.25.0/snmp_exporter-0.25.0.linux-amd64.tar.gz && tar xvf snmp_exporter-0.25.0.linux-amd64.tar.gz && mv snmp_exporter-0.25.0.linux-amd64 snmp_exporter
+EXPOSE 514 9090 3000 9116
+CMD ["sh", "-c", "rsyslogd -n & sleep infinity"]

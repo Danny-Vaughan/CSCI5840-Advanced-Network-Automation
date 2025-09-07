@@ -1,0 +1,4 @@
+FROM ubuntu:22.04
+ENV DEBIAN_FRONTEND=noninteractive
+RUN apt-get update && apt-get install -y iputils-ping curl iproute2 vim
+CMD ["sleep", "infinity"] 

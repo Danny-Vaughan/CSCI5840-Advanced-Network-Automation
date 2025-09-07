@@ -1,0 +1,5 @@
+FROM ubuntu:22.04
+ENV DEBIAN_FRONTEND=noninteractive
+RUN apt-get update && apt-get install -y apache2 iputils-ping curl iproute2
+EXPOSE 80
+CMD service apache2 start && sleep infinity
