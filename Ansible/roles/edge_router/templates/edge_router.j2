@@ -98,18 +98,11 @@ ipv6 router ospf {{ item.routing.ospf_process }}
 {% endif %}
 {% endif %}
 
-{% if item.routing.static_routes_ipv4 is defined %}
-{% for route in static_routes_ipv4 %}
-ip route {{ route }}
-{% endfor %}
+{% if item.routing.static_ipv4_network is defined and item.routing.static_ipv4_nexthop is defined %}
+ip route {{ item.routing.static_ipv4_network }} {{ item.routing.static_ipv4_nexthop }}
 {% endif %}
 
-{% if item.routing.static_routes_ipv6 is defined %}
-{% for route in static_routes_ipv6 %}
-ip route {{ route }}
-{% endfor %}
+{% if item.routing.static_ipv6_network is defined and item.routing.static_ipv6_nexthop is defined %}
+ip route {{ item.routing.static_ipv6_network }} {{ item.routing.static_ipv6_nexthop }}
 {% endif %}
-
-
-end
 
