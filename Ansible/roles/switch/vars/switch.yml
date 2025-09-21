@@ -1,0 +1,122 @@
+devices:
+- device_type: switch
+  hostname: S1
+  username: admin
+  password: admin
+  vlan_list:
+  - '10'
+  - '20'
+  - '30'
+  - '50'
+  interfaces:
+  - name: Vlan50
+    no_switchport: false
+    ipv4: 10.10.40.3/24
+  - name: Ethernet1
+    mode: trunk
+    no_switchport: false
+  - name: Ethernet2
+    description: to H1
+    mode: access
+    access_vlan: '10'
+    no_switchport: false
+  - name: Ethernet3
+    description: to H2
+    mode: access
+    access_vlan: '20'
+    no_switchport: false
+  - name: Ethernet4
+    description: trunk to S2
+    mode: trunk
+    no_switchport: false
+  routing: {}
+- device_type: switch
+  hostname: S2
+  username: admin
+  password: admin
+  vlan_list:
+  - '10'
+  - '20'
+  - '30'
+  - '50'
+  interfaces:
+  - name: Vlan50
+    no_switchport: false
+    ipv4: 10.10.40.4/24
+  - name: Ethernet1
+    mode: trunk
+    no_switchport: false
+  - name: Ethernet2
+    description: to H3
+    mode: access
+    access_vlan: '10'
+    no_switchport: false
+  - name: Ethernet3
+    description: to H4
+    mode: access
+    access_vlan: '30'
+    no_switchport: false
+  - name: Ethernet4
+    description: trunk to S1
+    mode: trunk
+    no_switchport: false
+  routing:
+    static_ipv4_network: 10.10.4.0/24
+    static_ipv4_nexthop: 10.10.40.1
+- device_type: switch
+  hostname: S3
+  username: admin
+  password: admin
+  vlan_list:
+  - '10'
+  - '20'
+  - '30'
+  - '50'
+  interfaces:
+  - name: Vlan50
+    no_switchport: false
+    ipv4: 10.10.4.7/24
+  - name: Ethernet1
+    description: To R3
+    mode: trunk
+    no_switchport: false
+  - name: Ethernet2
+    description: To R1
+    mode: trunk
+    no_switchport: false
+  - name: Ethernet3
+    description: To NMAS
+    mode: access
+    access_vlan: '50'
+    no_switchport: false
+  - name: Ethernet4
+    description: To S4
+    mode: trunk
+    no_switchport: false
+  routing: {}
+- device_type: switch
+  hostname: S4
+  username: admin
+  password: admin
+  vlan_list:
+  - '10'
+  - '20'
+  - '30'
+  - '50'
+  interfaces:
+  - name: Vlan50
+    no_switchport: false
+    ipv4: 10.10.4.8/24
+  - name: Ethernet1
+    description: To R4
+    mode: trunk
+    no_switchport: false
+  - name: Ethernet2
+    description: To R2
+    mode: trunk
+    no_switchport: false
+  - name: Ethernet4
+    description: To S3
+    mode: trunk
+    no_switchport: false
+  routing: {}

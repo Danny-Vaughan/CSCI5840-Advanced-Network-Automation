@@ -1,0 +1,71 @@
+hostname {{ item.hostname }}
+username {{ item.username }} secret {{ item.password }}
+
+snmp-server community public ro
+snmp-server location RCN
+snmp-server contact james.vaughan@colorado.edu
+snmp-server host 10.10.4.254 version 2c public
+
+logging host 10.10.4.254
+
+ip dhcp relay information option
+
+management api gnmi
+   transport grpc default
+
+spanning-tree mode rstp
+ip routing
+
+{% for vlan in item.vlan_list %}
+vlan {{ vlan }}
+{% endfor %}
+
+{% for interface in item.interfaces %}
+interface {{ interface.name }}
+  no shut
+{% if interface.no_switchport %}
+  no switchport
+{% endif %}
+{% if interface.encapsulation is defined %}
+  encapsulation dot1q vlan {{ interface.encapsulation }}
+{% endif %}
+{% if interface.ipv4 is defined %}
+  ip address {{ interface.ipv4 }}
+{% endif %}
+{% if interface.dhcp is defined %}
+  dhcp server ipv4
+{% endif %}
+{% if interface.ipv6 is defined %}
+  ipv6 address {{ interface.ipv6 }}
+{% if interface.ospf_area is defined %}
+  ipv6 ospf {{ item.routing.ospf_process }} area {{ interface.ospf_area }}
+{% endif %}
+{% endif %}
+{% endfor %}
+
+ip routing
+ipv6 unicast-routing
+
+{% if item.routing.ospf_process is defined %}
+router ospf {{ item.routing.ospf_process }}
+   router-id {{ item.routing.router_id }}
+{% for interface in item.interfaces %}
+{% if interface.ospf_area is defined and interface.ipv4 is defined %}
+   network {{ interface.ipv4 }} area {{ interface.ospf_area }}
+{% endif %}
+{% endfor %}
+{% endif %}
+
+ipv6 router ospf {{ item.routing.ospf_process }}
+   router-id {{ item.routing.router_id }}
+
+{% if item.routing.rip_enabled %}
+router rip
+{% for net in item.routing.rip_networks %}
+   network {{ net }}
+{% endfor %}
+   no shutdown
+{% endif %}
+
+end
+

@@ -1,0 +1,16 @@
+all:
+  children:
+    router:
+      hosts:
+        R1: ''
+        R2: ''
+    edge_router:
+      hosts:
+        R3: ''
+        R4: ''
+    switch:
+      hosts:
+        S1: ''
+        S2: ''
+        S3: ''
+        S4: ''

@@ -1,0 +1,12 @@
+
+---
+- name: Load Variables
+  include_vars:
+    file: "/home/student/Ansible-Jinja2-Configuration-Templates/roles/router/vars/router.yml"
+
+- name: Generate configuration files
+  template: 
+    src: router.j2 
+    dest: "/home/student/Ansible-Jinja2-Configuration-Templates/configs/{{item.hostname}}.txt"
+  loop: "{{ devices | default([]) }}"
+  when: devices is defined

@@ -1,0 +1,22 @@
+
+---
+- name: Configure Routers
+  hosts: router
+  connection: local
+  gather_facts: no
+  roles:
+    - role: router
+
+- name: Configure Edge Routers
+  hosts: edge_router
+  connection: local
+  gather_facts: no
+  roles:
+    - role: edge_router
+
+- name: Configure Switches
+  hosts: switch
+  connection: local
+  gather_facts: no
+  roles:
+    - role: switch

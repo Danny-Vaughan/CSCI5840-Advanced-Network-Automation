@@ -1,0 +1,78 @@
+hostname R3
+username admin secret admin
+
+snmp-server community public ro
+snmp-server location RCN
+snmp-server contact james.vaughan@colorado.edu
+snmp-server host 10.10.4.254 version 2c public
+
+logging host 10.10.4.254
+
+management api gnmi
+   transport grpc default
+
+spanning-tree mode rstp
+
+vlan 40
+vlan 50
+
+interface Ethernet1
+  no shut
+  no switchport
+  ip address 203.0.113.2/30
+  ipv6 address 2111::1/64
+interface Ethernet2
+  no shut
+  no switchport
+  ip address 10.10.0.65/28
+  ipv6 address 2112::1/64
+  ipv6 ospf 10 area 0.0.0.0
+interface Ethernet3
+  no shut
+  no switchport
+interface Ethernet3.40
+  no shut
+  encapsulation dot1q vlan 40
+  ip address 10.10.3.3/28
+  ipv6 address 2104::3/64
+  ipv6 ospf 10 area 0.0.0.0
+interface Ethernet3.50
+  no shut
+  encapsulation dot1q vlan 50
+  ip address 10.10.4.3/24
+interface Loopback0
+  no shut
+  ip address 1.0.0.3/32
+
+ip routing
+ipv6 unicast-routing
+
+router bgp 65030
+  router-id 1.0.0.3
+  neighbor 1.0.0.5 remote-as 65050
+  redistribute ospf
+  redistribute ospfv3
+
+  address-family ipv4
+  network 10.0.0.0/8
+
+  address-family ipv6
+  neighbor 2111::2 activate
+  network 2111::/64
+redistribute ospfv3
+
+router ospf 10
+  router-id 1.0.0.3
+  default-information originate
+  redistribute bgp
+
+ipv6 router ospf 10
+  router-id 1.0.0.3
+  redistribute bgp
+  default-information originate
+
+
+
+
+end
+

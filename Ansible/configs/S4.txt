@@ -1,0 +1,41 @@
+hostname S4
+username admin secret admin
+
+snmp-server community public ro
+snmp-server location RCN
+snmp-server contact james.vaughan@colorado.edu
+snmp-server host 10.10.4.254 version 2c public
+
+logging host 10.10.4.254
+
+management api gnmi
+   transport grpc default
+
+spanning-tree mode rstp
+
+vlan 10
+vlan 20
+vlan 30
+vlan 50
+
+interface Vlan50
+  no shut
+  ip address 10.10.4.8/24
+interface Ethernet1
+  no shut
+  description To R4
+  switchport mode trunk
+interface Ethernet2
+  no shut
+  description To R2
+  switchport mode trunk
+interface Ethernet4
+  no shut
+  description To S3
+  switchport mode trunk
+
+no ip routing
+
+
+end
+

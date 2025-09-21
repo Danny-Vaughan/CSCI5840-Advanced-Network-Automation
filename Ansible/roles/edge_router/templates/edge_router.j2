@@ -1,0 +1,115 @@
+hostname {{ item.hostname }}
+username {{ item.username }} secret {{ item.password }}
+
+snmp-server community public ro
+snmp-server location RCN
+snmp-server contact james.vaughan@colorado.edu
+snmp-server host 10.10.4.254 version 2c public
+
+logging host 10.10.4.254
+
+management api gnmi
+   transport grpc default
+
+spanning-tree mode rstp
+
+{% for vlan in item.vlan_list %}
+vlan {{ vlan }}
+{% endfor %}
+
+{% for interface in item.interfaces %}
+interface {{ interface.name }}
+  no shut
+{% if interface.no_switchport %}
+  no switchport
+{% endif %}
+{% if interface.description is defined %}
+  description {{ interface.description }}
+{% endif %}
+{% if interface.encapsulation is defined %}
+  encapsulation dot1q vlan {{ interface.encapsulation }}
+{% endif %}
+{% if interface.ipv4 is defined %}
+  ip address {{ interface.ipv4 }}
+{% endif %}
+{% if interface.ipv6 is defined %}
+  ipv6 address {{ interface.ipv6 }}
+{% endif %}
+{% if interface.ospf_area is defined %}
+  ipv6 ospf {{ item.routing.ospf_process }} area {{ interface.ospf_area }}
+{% endif %}
+{% endfor %}
+
+ip routing
+ipv6 unicast-routing
+
+router bgp {{ item.routing.bgp_asn }}
+  router-id {{ item.routing.router_id }}
+  neighbor {{ item.routing.bgp_neighbors_ipv4 }}
+{% if item.routing.bgp_redistribute_ospf is defined %}
+  redistribute ospf
+{% endif %}
+{% if item.routing.bgp_redistribute_ospfv3 is defined %}
+  redistribute ospfv3
+{% endif %}
+
+{% if item.routing.bgp_networks_ipv4 is defined %}
+  address-family ipv4
+{% for net in item.routing.bgp_networks_ipv4 %}
+  network {{ net }}
+{% endfor %}
+{% endif %}
+
+{% if item.routing.bgp_networks_ipv6 is defined %}
+  address-family ipv6
+  neighbor {{ item.routing.bgp_neighbors_ipv6.split(' ')[0] }} activate
+{% for net in item.routing.bgp_networks_ipv6 %}
+  network {{ net }}
+{% endfor %}
+{% if item.routing.bgp_redistribute_ospfv3 %}
+redistribute ospfv3
+{% endif %}
+{% endif %}
+
+{% if item.routing.ospf_process is defined %}
+router ospf {{ item.routing.ospf_process }}
+  router-id {{ item.routing.router_id }}
+{% if item.routing.ospf_default_info is defined %}
+  default-information originate
+{% endif %}
+{% if item.routing.ospf_redistribute_bgp is defined %}
+  redistribute bgp
+{% endif %}
+{% if item.routing.ospf_networks is defined %}
+{% for net in item.routing.ospf_networks %}
+  network {{ net }}
+{% endfor %}
+{% endif %}
+{% endif %}
+
+{% if item.routing.ospf_process is defined %}
+ipv6 router ospf {{ item.routing.ospf_process }}
+  router-id {{ item.routing.router_id }}
+{% if item.routing.bgp_redistribute_ospf %}
+  redistribute bgp
+{% endif %}
+{% if item.routing.ospf_default_info %}
+  default-information originate
+{% endif %}
+{% endif %}
+
+{% if item.routing.static_routes_ipv4 is defined %}
+{% for route in static_routes_ipv4 %}
+ip route {{ route }}
+{% endfor %}
+{% endif %}
+
+{% if item.routing.static_routes_ipv6 is defined %}
+{% for route in static_routes_ipv6 %}
+ip route {{ route }}
+{% endfor %}
+{% endif %}
+
+
+end
+
