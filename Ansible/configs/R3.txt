@@ -72,7 +72,3 @@ ipv6 router ospf 10
   default-information originate
 
 
-
-
-end
-

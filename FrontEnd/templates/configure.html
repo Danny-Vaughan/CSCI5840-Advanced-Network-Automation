@@ -1,0 +1,73 @@
+{% extends "base.html" %}
+{% block content %}
+  <h2>Configure {{ device_type|capitalize }}</h2>
+  <form method="POST" class="row g-3">
+
+    <div class="col-md-6">
+      <label class="form-label">Hostname</label>
+      <input type="text" class="form-control" name="hostname" required>
+    </div>
+
+    <div class="col-md-6">
+      <label class="form-label">Username</label>
+      <input type="text" class="form-control" name="username" required>
+    </div>
+
+    <div class="col-md-6">
+      <label class="form-label">Password</label>
+      <input type="password" class="form-control" name="password" required>
+    </div>
+
+    <div class="col-md-6">
+      <label class="form-label">Router ID</label>
+      <input type="text" class="form-control" name="router_id">
+    </div>
+
+    <div class="col-md-6">
+      <label class="form-label">OSPF Process</label>
+      <input type="text" class="form-control" name="ospf_process">
+    </div>
+
+    <div class="col-md-6">
+      <label class="form-label">VLAN List (comma-separated)</label>
+      <input type="text" class="form-control" name="vlan_list">
+    </div>
+
+    <div class="col-md-6">
+      <label class="form-label">BGP ASN</label>
+      <input type="text" class="form-control" name="bgp_asn">
+    </div>
+
+    <div class="col-md-6">
+      <label class="form-label">BGP Neighbors (comma-separated)</label>
+      <input type="text" class="form-control" name="bgp_neighbors">
+    </div>
+
+    <div class="col-md-6">
+      <label class="form-label">BGP Networks IPv4 (comma-separated)</label>
+      <input type="text" class="form-control" name="bgp_networks_ipv4">
+    </div>
+
+    <div class="col-md-6">
+      <label class="form-label">BGP Networks IPv6 (comma-separated)</label>
+      <input type="text" class="form-control" name="bgp_networks_ipv6">
+    </div>
+
+    <div class="col-md-6">
+      <label class="form-label">RIP Networks (comma-separated)</label>
+      <input type="text" class="form-control" name="rip_networks">
+    </div>
+
+    <div class="col-md-6">
+      <label class="form-check-label">Enable RIP</label>
+      <input class="form-check-input" type="checkbox" name="rip_enabled" value="TRUE">
+    </div>
+
+    <input type="hidden" name="device_type" value="{{ device_type }}">
+
+    <div class="col-12">
+      <button type="submit" class="btn btn-primary">Save Configuration</button>
+    </div>
+  </form>
+{% endblock %}
+
