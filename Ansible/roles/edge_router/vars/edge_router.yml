@@ -1,0 +1,101 @@
+devices:
+- device_type: edge_router
+  hostname: R3
+  username: admin
+  password: admin
+  vlan_list:
+  - '40'
+  - '50'
+  interfaces:
+  - name: Ethernet1
+    no_switchport: true
+    ipv4: 203.0.113.2/30
+    ipv6: 2111::1/64
+  - name: Ethernet2
+    no_switchport: true
+    ipv4: 10.10.0.65/28
+    ipv6: 2112::1/64
+    ospf_area: 0.0.0.0
+  - name: Ethernet3
+    no_switchport: true
+  - name: Ethernet3.40
+    no_switchport: false
+    encapsulation: '40'
+    ipv4: 10.10.3.3/28
+    ipv6: 2104::3/64
+    ospf_area: 0.0.0.0
+  - name: Ethernet3.50
+    no_switchport: false
+    encapsulation: '50'
+    ipv4: 10.10.4.3/24
+  - name: Loopback0
+    no_switchport: false
+    ipv4: 1.0.0.3/32
+  routing:
+    router_id: 1.0.0.3
+    ospf_process: '10'
+    bgp_asn: '65030'
+    bgp_neighbors_ipv4: 1.0.0.5 remote-as 65050
+    bgp_networks_ipv4:
+    - 10.0.0.0/8
+    bgp_neighbors_ipv6: 2111::2 remote-as 65050
+    bgp_networks_ipv6:
+    - 2111::/64
+    bgp_redistribute_ospf: true
+    bgp_redistribute_ospfv3: true
+    ospf_default_info: true
+    ospf_redistribute_bgp: true
+    static_ipv4_network: 0.0.0.0/0
+- device_type: edge_router
+  hostname: R4
+  username: admin
+  password: admin
+  vlan_list:
+  - '40'
+  - '50'
+  interfaces:
+  - name: Ethernet1
+    no_switchport: true
+    ipv4: 203.0.113.6/30
+    ipv6: 2114::1/64
+  - name: Ethernet2
+    no_switchport: true
+    ipv4: 10.10.0.66/28
+    ipv6: 2112::2/64
+    ospf_area: 0.0.0.0
+  - name: Ethernet3
+    no_switchport: true
+  - name: Ethernet3.40
+    no_switchport: false
+    encapsulation: '40'
+    ipv4: 10.10.3.4/28
+    ipv6: 2104::4/64
+    ospf_area: 0.0.0.0
+  - name: Ethernet3.50
+    no_switchport: false
+    encapsulation: '50'
+    ipv4: 10.10.4.4/24
+  - name: Loopback0
+    no_switchport: false
+    ipv4: 1.0.0.4/32
+  routing:
+    router_id: 1.0.0.4
+    ospf_process: '10'
+    bgp_asn: '65030'
+    bgp_neighbors_ipv4: 1.0.0.5 remote-as 65050
+    bgp_networks_ipv4:
+    - 10.0.0.0/8
+    bgp_neighbors_ipv6: 2114::2 remote-as 65050
+    bgp_networks_ipv6:
+    - 2101::/64
+    - 2102::/64
+    - 2103::/64
+    - 2104::/64
+    bgp_redistribute_ospf: true
+    bgp_redistribute_ospfv3: true
+    ospf_default_info: true
+    ospf_redistribute_bgp: true
+    static_ipv4_network: 0.0.0.0/0
+    static_ipv4_nexthop: 203.0.113.5
+    static_ipv6_network: ::/0
+    static_ipv6_nexthop: 2114::2

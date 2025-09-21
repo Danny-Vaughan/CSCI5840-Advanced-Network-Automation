@@ -1,0 +1,46 @@
+hostname {{ item.hostname }}
+username {{ item.username }} secret {{ item.password }}
+
+snmp-server community public ro
+snmp-server location RCN
+snmp-server contact james.vaughan@colorado.edu
+snmp-server host 10.10.4.254 version 2c public
+
+logging host 10.10.4.254
+
+management api gnmi
+   transport grpc default
+
+spanning-tree mode rstp
+
+{% for vlan in item.vlan_list %}
+vlan {{ vlan }}
+{% endfor %}
+
+{% for interface in item.interfaces %}
+interface {{ interface.name }}
+  no shut
+{% if interface.description is defined %}
+  description {{ interface.description }}
+{% endif %}
+{% if interface.mode is defined %}
+  switchport mode {{ interface.mode }}
+{% endif %}
+{% if interface.access_vlan is defined %}
+  switchport access vlan {{ interface.access_vlan }}
+{% endif %}
+{% if interface.ipv4 is defined %}
+  ip address {{ interface.ipv4 }}
+{% endif %}
+{% endfor %}
+
+no ip routing
+
+{% if item.routing.static_routes is defined %}
+{% for route in static_routes %}
+ip route {{ route }}
+{% endfor %}
+{% endif %}
+
+end
+
