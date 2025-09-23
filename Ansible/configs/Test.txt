@@ -1,0 +1,39 @@
+hostname Test
+username Test secret test
+
+snmp-server community public ro
+snmp-server location RCN
+snmp-server contact james.vaughan@colorado.edu
+snmp-server host 10.10.4.254 version 2c public
+
+logging host 10.10.4.254
+
+ip dhcp relay information option
+
+management api gnmi
+   transport grpc default
+
+spanning-tree mode rstp
+ip routing
+
+vlan 5
+vlan 10
+vlan 15
+vlan 20
+
+
+ip routing
+ipv6 unicast-routing
+
+router ospf 10
+   router-id 10.10.10.1
+
+ipv6 router ospf 10
+   router-id 10.10.10.1
+
+router rip
+   network 10.10.10.0
+   no shutdown
+
+end
+
