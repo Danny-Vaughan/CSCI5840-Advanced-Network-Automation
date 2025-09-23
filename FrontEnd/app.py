@@ -5,6 +5,8 @@ import os
 
 app = Flask(__name__)
 
+app.config["SECRET_KEY"] = "key"
+
 # CSV file path
 csv_file = "/home/student/CSCI5840-Advanced-Network-Automation/Ansible/requirements.csv"
 config_gen_script = "/home/student/CSCI5840-Advanced-Network-Automation/Ansible/main.py"
@@ -37,7 +39,7 @@ def configure(device_type):
                 form_data[key] = "FALSE"
 
         # Normalize comma-separated fields
-        for key in ["vlan_list", "rip_networks", "bgp_networks_ipv4", "bgp_networks_ipv6", "bgp_neighbors", "bgp_neighbors_ipv6", "ospf_networks"]:
+        for key in ["vlan_list", "rip_networks", "bgp_networks_ipv4", "bgp_networks_ipv6", "bgp_neighbors_ipv4", "bgp_neighbors_ipv6", "ospf_networks"]:
             if form_data.get(key):
                 form_data[key] = form_data[key].replace(" ", "")
 
@@ -46,7 +48,7 @@ def configure(device_type):
 
         # Run Ansible pipeline
         try:
-            subprocess.run(["python3", config_gen_script], check=True)
+            subprocess.run(["python3", config_gen_script])
             flash("Configuration saved and templates generated!", "success")
         except subprocess.CalledProcessError as e:
             flash(f"Error running main.py: {e}", "danger")
