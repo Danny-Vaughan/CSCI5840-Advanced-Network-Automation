@@ -10,7 +10,8 @@ site_yml_location = "/home/student/CSCI5840-Advanced-Network-Automation/Ansible/
 router_tasks_yml_location = "/home/student/CSCI5840-Advanced-Network-Automation/Ansible/roles/router/tasks/main.yml"
 switch_tasks_yml_location = "/home/student/CSCI5840-Advanced-Network-Automation/Ansible/roles/switch/tasks/main.yml"
 edge_router_tasks_yml_location = "/home/student/CSCI5840-Advanced-Network-Automation/Ansible/roles/edge_router/tasks/main.yml"
-
+requirements = "/home/student/CSCI5840-Advanced-Network-Automation/Ansible/requirements.csv"
+inventory = "/home/student/CSCI5840-Advanced-Network-Automation/Ansible/inventory.yml"
 
 site_yml_content = """
 ---
@@ -96,14 +97,15 @@ def mk_playbook_files():
     print("Created edge_router main.yml in tasks folder")
 
     # runs the mk_new_play.py script that creates a yml file with the formatted info from requirements.csv
-    mk_new_play.yaml_file_creator("requirements.csv")
+    mk_new_play.build_inventory(requirements, inventory)
+    mk_new_play.yaml_file_creator(requirements)
 
 
 
 # runs the ansible playbook
 def mk_play_run():
     print("Running ansible-playbook")
-    run = subprocess.run(["ansible-playbook", "-i", "inventory.yml", "/home/student/CSCI5840-Advanced-Network-Automation/Ansible/site.yml"], stdout=subprocess.PIPE, text=True)
+    run = subprocess.run(["ansible-playbook", "-i", "/home/student/CSCI5840-Advanced-Network-Automation/Ansible/inventory.yml", "/home/student/CSCI5840-Advanced-Network-Automation/Ansible/site.yml"], stdout=subprocess.PIPE, text=True)
     print(run.stdout)
     if run.returncode == 0:
         print("Playbook completed")

@@ -3,8 +3,8 @@ import csv
 import yaml
 
 # Input/Output
-input_csv_file = "requirements.csv"
-inventory_file = "inventory.yml"
+input_csv_file = "/home/student/CSCI5840-Advanced-Network-Automation/Ansible/requirements.csv"
+inventory_file = "/home/student/CSCI5840-Advanced-Network-Automation/Ansible/inventory.yml"
 
 def normalize_value(val):
     if val is None:

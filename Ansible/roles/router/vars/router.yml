@@ -111,3 +111,25 @@ devices:
     - 10.10.1.0
     router_id: 10.0.0.2
     ospf_process: '10'
+- device_type: router
+  hostname: Test
+  username: Test
+  password: test
+  vlan_list:
+  - '5'
+  - '10'
+  - '15'
+  - '20'
+  interfaces: []
+  routing:
+    rip_enabled: true
+    rip_networks:
+    - 10.10.10.0
+    router_id: 10.10.10.1
+    ospf_process: '10'
+    bgp_asn: '65030'
+    bgp_neighbors_ipv4: 10.10.10.2
+    bgp_networks_ipv4:
+    - 10.10.10.0/24
+    bgp_networks_ipv6:
+    - 2001::1/64,2002::2/64
