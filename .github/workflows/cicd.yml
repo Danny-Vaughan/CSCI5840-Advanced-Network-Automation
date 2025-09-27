@@ -1,0 +1,10 @@
+name: Test Runner Setup
+
+on: [push]
+
+jobs:
+  hello-world:
+    runs-on: self-hosted
+    steps:
+      - name: Print message
+        run: echo "Runner is working!"

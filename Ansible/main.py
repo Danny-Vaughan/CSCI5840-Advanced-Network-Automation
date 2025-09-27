@@ -117,15 +117,14 @@ def Config(man_ip, config_file):
     try:
 
         login = {
-                "device_type": "cisco_ios",
+                "device_type": "arista_eos",
                 "host": f"{man_ip}",
-                "username": f"team",
-                "password": f"team",
-                "secret": f"netman",
+                "username": f"admin",
+                "password": f"admin"
         }
 
         with ConnectHandler(**login) as net_connect:
-            print(f"Logged in to {man_ip} as team")
+            print(f"Logged in to {man_ip}")
             net_connect.enable()
             output = net_connect.send_config_from_file(config_file)
             print(f"{man_ip} configured")
@@ -134,9 +133,9 @@ def Config(man_ip, config_file):
 
 
 # uses the config function and concurrency to run the function for each router at the same time   
-def bgp_config():
-    config_ip_list = ["198.51.100.10", "198.51.100.20", "198.51.100.30", "198.51.100.40", "198.51.100.50", "198.51.100.60", "198.51.100.70", "198.51.100.80"]
-    config_file_list = ["/etc/ansible/configs/R1.txt", "/etc/ansible/configs/R2.txt", "/etc/ansible/configs/R3.txt", "/etc/ansible/configs/R4.txt", "/etc/ansible/configs/R5.txt", "/etc/ansible/configs/R6.txt", "/etc/ansible/configs/R7.txt", "/etc/ansible/configs/R8.txt"]
+def topology_config():
+    config_ip_list = ["172.20.20.2", "172.20.20.10", "172.20.20.15", "172.20.20.5", "172.20.20.9", "172.20.20.6", "172.20.20.4", "172.20.20.16"]
+    config_file_list = ["/home/student/CSCI5840-Advanced-Network-Automation/Ansible/configs/R1.txt", "/home/student/CSCI5840-Advanced-Network-Automation/Ansible/configs/R2.txt", "/home/student/CSCI5840-Advanced-Network-Automation/Ansible/configs/R3.txt", "/home/student/CSCI5840-Advanced-Network-Automation/Ansible/configs/R4.txt", "/home/student/CSCI5840-Advanced-Network-Automation/Ansible/configs/S1.txt", "/home/student/CSCI5840-Advanced-Network-Automation/Ansible/configs/S2.txt", "/home/student/CSCI5840-Advanced-Network-Automation/Ansible/configs/S3.txt", "/home/student/CSCI5840-Advanced-Network-Automation/Ansible/configs/S4.txt"]
     with cf.ThreadPoolExecutor(max_workers=4) as executor:
         futures = []
         for ip, config_file in zip(config_ip_list, config_file_list):
