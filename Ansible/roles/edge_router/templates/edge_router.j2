@@ -93,7 +93,7 @@ ipv6 router ospf {{ item.routing.ospf_process }}
 {% if item.routing.bgp_redistribute_ospf %}
   redistribute bgp
 {% endif %}
-{% if item.routing.ospf_default_info %}
+{% if item.routing.ospf_default_info is defined %}
   default-information originate
 {% endif %}
 {% endif %}

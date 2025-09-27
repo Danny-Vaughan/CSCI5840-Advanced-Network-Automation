@@ -1,73 +1,244 @@
 {% extends "base.html" %}
 {% block content %}
-  <h2>Configure {{ device_type|capitalize }}</h2>
-  <form method="POST" class="row g-3">
+<h2>Configure Device</h2>
+<form id="configForm" method="POST" class="row g-3">
 
-    <div class="col-md-6">
-      <label class="form-label">Hostname</label>
-      <input type="text" class="form-control" name="hostname" required>
-    </div>
+  <!-- Device type dropdown -->
+  <div class="col-md-6">
+    <label class="form-label">Device Type</label>
+    <select id="deviceType" class="form-select" name="device_type" required>
+      <option value="">-- Select --</option>
+      <option value="router">Router</option>
+      <option value="edge_router">Edge Router</option>
+      <option value="switch">Switch</option>
+    </select>
+  </div>
 
-    <div class="col-md-6">
-      <label class="form-label">Username</label>
-      <input type="text" class="form-control" name="username" required>
-    </div>
+  <!-- Shared fields -->
+  <div class="col-md-6">
+    <label class="form-label">Hostname</label>
+    <input type="text" class="form-control" name="hostname" required>
+  </div>
+  <div class="col-md-6">
+    <label class="form-label">Username</label>
+    <input type="text" class="form-control" name="username" required>
+  </div>
+  <div class="col-md-6">
+    <label class="form-label">Password</label>
+    <input type="password" class="form-control" name="password" required>
+  </div>
+  <div class="col-md-6">
+    <label class="form-label">VLAN List (comma-separated)</label>
+    <input type="text" class="form-control" name="vlan_list">
+  </div>
 
-    <div class="col-md-6">
-      <label class="form-label">Password</label>
-      <input type="password" class="form-control" name="password" required>
-    </div>
-
+  <!-- Router-only section -->
+  <div class="device-section" data-type="router" style="display:none;">
     <div class="col-md-6">
       <label class="form-label">Router ID</label>
       <input type="text" class="form-control" name="router_id">
     </div>
-
     <div class="col-md-6">
       <label class="form-label">OSPF Process</label>
       <input type="text" class="form-control" name="ospf_process">
     </div>
-
     <div class="col-md-6">
-      <label class="form-label">VLAN List (comma-separated)</label>
-      <input type="text" class="form-control" name="vlan_list">
+      <label class="form-label">OSPF Networks (semicolon-separated)</label>
+      <input type="text" class="form-control" name="ospf_networks" placeholder="10.0.0.0/24;20.0.0.0/24">
     </div>
+    <div class="col-md-6">
+      <label class="form-check-label">RIP Enabled</label>
+      <input type="checkbox" class="form-check-input" name="rip_enabled" value="TRUE">
+    </div>
+    <div class="col-md-6">
+      <label class="form-label">RIP Networks (semicolon-separated)</label>
+      <input type="text" class="form-control" name="rip_networks" placeholder="10.0.0.0/24;20.0.0.0/24">
+    </div>
+  </div>
 
+  <!-- Edge router section -->
+  <div class="device-section" data-type="edge_router" style="display:none;">
+    <div class="col-md-6">
+      <label class="form-label">Router ID</label>
+      <input type="text" class="form-control" name="router_id">
+    </div>
+    <div class="col-md-6">
+      <label class="form-label">OSPF Process</label>
+      <input type="text" class="form-control" name="ospf_process">
+    </div>
+    <div class="col-md-6">
+      <label class="form-check-label">RIP Enabled</label>
+      <input type="checkbox" class="form-check-input" name="rip_enabled" value="TRUE">
+    </div>
+    <div class="col-md-6">
+      <label class="form-label">RIP Networks (semicolon-separated)</label>
+      <input type="text" class="form-control" name="rip_networks" placeholder="10.0.0.0;20.0.0.0">
+    </div>
     <div class="col-md-6">
       <label class="form-label">BGP ASN</label>
       <input type="text" class="form-control" name="bgp_asn">
     </div>
-
     <div class="col-md-6">
-      <label class="form-label">BGP Neighbors (comma-separated)</label>
+      <label class="form-label">BGP Neighbors IPv4</label>
       <input type="text" class="form-control" name="bgp_neighbors_ipv4">
     </div>
-
     <div class="col-md-6">
-      <label class="form-label">BGP Networks IPv4 (comma-separated)</label>
+      <label class="form-label">BGP Neighbors IPv6</label>
+      <input type="text" class="form-control" name="bgp_neighbors_ipv6">
+    </div>
+    <div class="col-md-6">
+      <label class="form-label">BGP Networks IPv4</label>
       <input type="text" class="form-control" name="bgp_networks_ipv4">
     </div>
-
     <div class="col-md-6">
-      <label class="form-label">BGP Networks IPv6 (comma-separated)</label>
+      <label class="form-label">BGP Networks IPv6</label>
       <input type="text" class="form-control" name="bgp_networks_ipv6">
     </div>
-
     <div class="col-md-6">
-      <label class="form-label">RIP Networks (comma-separated)</label>
-      <input type="text" class="form-control" name="rip_networks">
+      <label class="form-check-label">Redistribute OSPF into BGP</label>
+      <input type="checkbox" class="form-check-input" name="bgp_redistribute_ospf" value="TRUE">
     </div>
-
     <div class="col-md-6">
-      <label class="form-check-label">Enable RIP</label>
-      <input class="form-check-input" type="checkbox" name="rip_enabled" value="TRUE">
+      <label class="form-check-label">Redistribute OSPFv3 into BGP</label>
+      <input type="checkbox" class="form-check-input" name="bgp_redistribute_ospfv3" value="TRUE">
     </div>
+  </div>
 
-    <input type="hidden" name="device_type" value="{{ device_type }}">
+  <!-- Interface count -->
+  <div class="col-md-6">
+    <label class="form-label">Number of Interfaces</label>
+    <select id="interfaceCount" class="form-select" name="interface_count">
+      {% for i in range(1, 11) %}
+      <option value="{{ i }}">{{ i }}</option>
+      {% endfor %}
+    </select>
+  </div>
 
-    <div class="col-12">
-      <button type="submit" class="btn btn-primary">Save Configuration</button>
+  <!-- Interfaces container -->
+  <div id="interfacesContainer" class="row g-3 mt-3"></div>
+
+  <!-- Operation -->
+  <div class="col-md-12 mt-4">
+    <label class="form-label d-block">Operation</label>
+    <div class="form-check form-check-inline">
+      <input class="form-check-input" type="radio" name="operation" id="overwrite" value="overwrite" required>
+      <label class="form-check-label" for="overwrite">Overwrite Existing</label>
     </div>
-  </form>
+    <div class="form-check form-check-inline">
+      <input class="form-check-input" type="radio" name="operation" id="update" value="update" required>
+      <label class="form-check-label" for="update">Update (Merge)</label>
+    </div>
+  </div>
+
+  <div class="col-12">
+    <button type="submit" class="btn btn-primary">Save Configuration</button>
+  </div>
+</form>
+
+<script>
+const deviceSelect = document.getElementById("deviceType");
+const sections = document.querySelectorAll(".device-section");
+const intfCountSelect = document.getElementById("interfaceCount");
+const intfContainer = document.getElementById("interfacesContainer");
+const configForm = document.getElementById("configForm");
+
+// Build interface fields dynamically
+function buildInterfaces() {
+  intfContainer.innerHTML = "";
+  const count = parseInt(intfCountSelect.value, 10);
+  const deviceType = deviceSelect.value;
+
+  for (let i = 1; i <= count; i++) {
+    let html = `
+      <h5 class="mt-4">Interface ${i}</h5>
+      <div class="col-md-3">
+        <label class="form-label">Name</label>
+        <input type="text" class="form-control" name="intf_name_${i}" required>
+      </div>
+      <div class="col-md-4">
+        <label class="form-label">IPv4 Address / Prefix</label>
+        <input type="text" class="form-control" name="intf_ipv4_${i}" placeholder="10.10.10.1/24">
+      </div>
+      <div class="col-md-4">
+        <label class="form-label">IPv6 Address / Prefix</label>
+        <input type="text" class="form-control" name="intf_ipv6_${i}" placeholder="2001:db8::1/64">
+      </div>
+      <div class="col-md-5">
+        <label class="form-label">Description</label>
+        <input type="text" class="form-control" name="intf_desc_${i}">
+      </div>
+      <div class="col-md-3">
+        <label class="form-label">Encapsulation</label>
+        <input type="text" class="form-control" name="intf_encapsulation_${i}">
+      </div>
+      <div class="col-md-3">
+        <label class="form-check-label">No Switchport</label>
+        <input type="checkbox" class="form-check-input" name="intf_no_switchport_${i}" value="TRUE">
+      </div>
+    `;
+
+    if (deviceType === "switch") {
+      html += `
+        <div class="col-md-3">
+          <label class="form-label">Switchport Mode</label>
+          <select class="form-select" name="intf_switchport_mode_${i}">
+            <option value="access">Access</option>
+            <option value="trunk">Trunk</option>
+          </select>
+        </div>
+        <div class="col-md-3">
+          <label class="form-label">Access VLAN</label>
+          <input type="text" class="form-control" name="intf_access_vlan_${i}">
+        </div>
+      `;
+    }
+
+    intfContainer.insertAdjacentHTML("beforeend", html);
+  }
+}
+
+// Show/hide device-specific sections
+function toggleSections() {
+  const selected = deviceSelect.value;
+  sections.forEach(section => {
+    section.style.display = section.dataset.type === selected ? "block" : "none";
+  });
+  buildInterfaces();
+}
+
+// Validate only IPv4 CIDR
+function validateIP(ip) {
+  const ipv4Regex = /^(25[0-5]|2[0-4]\d|1\d{2}|[1-9]?\d)(\.(25[0-5]|2[0-4]\d|1\d{2}|[1-9]?\d)){3}\/([0-9]|[1-2]\d|3[0-2])$/;
+  return ip === "" || ipv4Regex.test(ip);
+}
+
+// Form validation
+configForm.addEventListener("submit", e => {
+  const ipv4Fields = intfContainer.querySelectorAll("input[name^='intf_ipv4_']");
+  for (let f of ipv4Fields) {
+    if (!validateIP(f.value)) {
+      alert(`Invalid IPv4 address/prefix: ${f.value}`);
+      f.focus();
+      e.preventDefault();
+      return;
+    }
+  }
+});
+
+// disable inputs in non-selected device sections before submit
+configForm.addEventListener("submit", (e) => {
+  const selected = deviceSelect.value;
+  sections.forEach(section => {
+    const inputs = section.querySelectorAll("input, select, textarea");
+    const shouldDisable = section.dataset.type !== selected;
+    inputs.forEach(i => i.disabled = shouldDisable);
+  });
+});
+
+
+deviceSelect.addEventListener("change", toggleSections);
+intfCountSelect.addEventListener("change", buildInterfaces);
+window.addEventListener("DOMContentLoaded", () => { toggleSections(); buildInterfaces(); });
+</script>
 {% endblock %}
 

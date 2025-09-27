@@ -99,3 +99,32 @@ devices:
     static_ipv4_nexthop: 203.0.113.5
     static_ipv6_network: ::/0
     static_ipv6_nexthop: 2114::2
+- device_type: edge_router
+  hostname: Test2
+  username: admin
+  password: admin
+  vlan_list:
+  - '10'
+  - '20'
+  - '30'
+  - '40'
+  - '50'
+  interfaces:
+  - name: Ethernet1
+    description: This is a test
+    no_switchport: true
+    ipv4: 1.1.1.1/24
+    ipv6: 2001::2/64
+  routing:
+    rip_enabled: false
+    router_id: 1.1.1.1
+    ospf_process: '10'
+    bgp_asn: '65030'
+    bgp_neighbors_ipv4: 10.10.10.2
+    bgp_networks_ipv4:
+    - 10.10.10.0/24
+    bgp_neighbors_ipv6: 2001::2
+    bgp_networks_ipv6:
+    - 2001::1/64,2002::2/64
+    bgp_redistribute_ospf: true
+    bgp_redistribute_ospfv3: true
