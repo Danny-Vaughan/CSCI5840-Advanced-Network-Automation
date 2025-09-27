@@ -11,6 +11,7 @@ devices:
   - '50'
   interfaces:
   - name: Ethernet1
+    description: Configured by Netmiko
     no_switchport: true
   - name: Ethernet1.40
     no_switchport: false

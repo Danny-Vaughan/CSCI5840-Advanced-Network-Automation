@@ -146,6 +146,7 @@ def topology_config():
 def main():
     mk_playbook_files()
     mk_play_run()
+    topology_config()
 
 
 if __name__ == "__main__":

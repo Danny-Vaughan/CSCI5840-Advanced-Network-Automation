@@ -29,6 +29,9 @@ interface {{ interface.name }}
 {% if interface.encapsulation is defined %}
   encapsulation dot1q vlan {{ interface.encapsulation }}
 {% endif %}
+{% if interface.description is defined %}
+  description {{ interface.description }}
+{% endif %}
 {% if interface.ipv4 is defined %}
   ip address {{ interface.ipv4 }}
 {% endif %}

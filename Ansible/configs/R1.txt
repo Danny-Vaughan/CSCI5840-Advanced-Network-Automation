@@ -25,6 +25,7 @@ vlan 50
 interface Ethernet1
   no shut
   no switchport
+  description Configured by Netmiko
 interface Ethernet1.40
   no shut
   encapsulation dot1q vlan 40

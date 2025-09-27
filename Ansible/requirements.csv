@@ -1,6 +1,6 @@
 device_type,hostname,username,password,vlan_list,intf_name,intf_desc,intf_switchport_mode,intf_access_vlan,intf_no_switchport,intf_encapsulation,intf_ipv4,intf_ipv6,ospf_process,intf_ospf_area,bgp_asn,router_id,bgp_neighbors_ipv4,bgp_networks_ipv4,bgp_neighbors_ipv6,bgp_networks_ipv6,bgp_redistribute_ospf,bgp_redistribute_ospfv3,ospf_default_info,ospf_redistribute_bgp,ospf_networks,static_ipv4_network,static_ipv4_nexthop,static_ipv6_network,static_ipv6_nexthop,rip_networks,rip_enabled
 ,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
-router,R1,admin,admin,"10,20,30,40,50",Ethernet1,,,,TRUE,,,,10,,,10.0.0.1,,,,,,,,,,,,,,10.10.0.0;10.10.1.0,TRUE
+router,R1,admin,admin,"10,20,30,40,50",Ethernet1,Configured by Netmiko,,,TRUE,,,,10,,,10.0.0.1,,,,,,,,,,,,,,10.10.0.0;10.10.1.0,TRUE
 router,R1,admin,admin,"10,20,30,40,50",Ethernet1.40,,,,,40,10.10.3.1/28,2104::1/64,10,0.0.0.0,,10.0.0.1,,,,,,,,,10.0.0.1/32;10.10.3.0/28;10.10.4.0/24;10.10.0.0/28;10.10.1.0/28,,,,,10.10.0.0;10.10.1.0,TRUE
 router,R1,admin,admin,"10,20,30,40,50",Ethernet1.50,,,,,50,10.10.4.1/24,,10,,,10.0.0.1,,,,,,,,,,,,,,10.10.0.0;10.10.1.0,TRUE
 router,R1,admin,admin,"10,20,30,40,50",Ethernet2,,,,TRUE,,,,10,,,10.0.0.1,,,,,,,,,,,,,,10.10.0.0;10.10.1.0,TRUE

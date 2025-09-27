@@ -120,28 +120,3 @@ devices:
     mode: trunk
     no_switchport: false
   routing: {}
-- device_type: switch
-  hostname: Test
-  username: admin
-  password: admin
-  vlan_list:
-  - '10'
-  - '20'
-  - '30'
-  - '40'
-  - '50'
-  interfaces:
-  - name: Ethernet1
-    description: Access VLAN 10 test interface
-    mode: access
-    access_vlan: '10'
-    no_switchport: false
-  - name: Ethernet2
-    description: Testing a Trunk
-    mode: trunk
-    no_switchport: false
-  - name: Ethernet3
-    mode: access
-    no_switchport: true
-  routing:
-    rip_enabled: false
