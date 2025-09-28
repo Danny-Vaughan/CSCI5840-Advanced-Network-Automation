@@ -1,0 +1,9 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>Test Results</h2>
+<pre>{{ output }}</pre>
+<a href="{{ url_for('run_test') }}">Run another test</a>
+
+{% endblock %}
+
+

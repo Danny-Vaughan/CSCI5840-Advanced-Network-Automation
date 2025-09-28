@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+{% block content %}
+  <h2>Health Check Portal</h2>
+
+<form method="POST" class="row g-3">
+  <label for="device">Device:</label>
+  <select name="device" id="device">
+    {% for d in devices %}
+      <option value="{{ d }}">{{ d }}</option>
+    {% endfor %}
+  </select>
+
+  <label for="test_type">Test:</label>
+  <select name="test_type" id="test_type" onchange="toggleParamField()">
+    <option value="connectivity">Connectivity Check</option>
+    <option value="bgp">BGP Neighbors</option>
+    <option value="route">IP Route Finder</option>
+  </select>
+
+  <div id="paramField">
+    <label for="param">Parameter:</label>
+    <input type="text" name="param" id="param" placeholder="IP address or search term">
+  </div>
+
+  <button type="submit">Run Test</button>
+</form>
+
+<script>
+function toggleParamField() {
+  const testType = document.getElementById("test_type").value;
+  const paramField = document.getElementById("paramField");
+  if (testType === "bgp") {
+    paramField.style.display = "none";
+  } else {
+    paramField.style.display = "block";
+  }
+}
+toggleParamField();  // run on load
+
+{% endblock %}
+
+

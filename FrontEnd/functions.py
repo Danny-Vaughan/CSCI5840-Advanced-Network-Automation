@@ -1,5 +1,7 @@
 import csv
 import os
+from netmiko import ConnectHandler
+import re
 
 requirements = "/home/student/CSCI5840-Advanced-Network-Automation/Ansible/requirements.csv"
 
@@ -17,6 +19,76 @@ headers = [
 ]
 
 
+# Health check portal functions
+def connectivity_check(man_ip, target_ip):
+    router = {
+        "device_type": "arista_eos",
+        "ip": f"{man_ip}",
+        "username": "admin",
+        "password": "admin"
+    }
+    try:
+        with ConnectHandler(**router) as net_connect:
+            net_connect.enable()
+            output = net_connect.send_command(f"ping {target_ip}")
+            return output
+    except Exception as e:
+        return f"Error: {e}"
+
+def bgp_neighbors(man_ip):
+    router = {
+        "device_type": "arista_eos",
+        "ip": f"{man_ip}",
+        "username": "admin",
+        "password": "admin"
+    }
+    try:
+        with ConnectHandler(**router) as net_connect:
+            output = net_connect.send_command("show ip bgp summ")
+            if not output:
+                return f"no bgp configuration found"
+            neighbors = re.findall(r"(\d+\.\d+\.\d+\.\d+)", output)
+            return(f"BGP neighbors: {neighbors[1:]}")
+    except Exception as e:
+        return f"Error: {e}"
+
+def route_finder(man_ip, search_term):
+    router = {
+        "device_type": "arista_eos",
+        "ip": f"{man_ip}",
+        "username": "admin",
+        "password": "admin"
+    }
+    try:
+        with ConnectHandler(**router) as net_connect:
+            if search_term:
+                output = net_connect.send_command(f"show ip route | inc {search_term}")
+            else:
+                output = net_connect.send_command("show ip route")
+            return(output)
+    except Exception as e:
+        return f"Error: {e}"
+
+# Device selection for health check portal
+devices = {
+    "R1": "172.20.20.2",
+    "R2": "172.20.20.10",
+    "R3": "172.20.20.15",
+    "R4": "172.20.20.5",
+    "S1": "172.20.20.9",
+    "S2": "172.20.20.6",
+    "S3": "172.20.20.4",
+    "S4": "172.20.20.16"
+}
+
+def get_all_devices():
+    return list(devices.keys())
+
+def get_device_ip(name):
+    return devices.get(name)
+
+
+# Read requirements.csv for configuration and template generation functions
 def read_csv():
     """Read CSV into list of dicts."""
     if not os.path.exists(requirements):
@@ -71,8 +143,6 @@ def form_to_rows(form_data):
         rows.append(row)
 
     return rows
-
-
 
 def merge_rows(existing_rows, new_rows, operation="update"):
     """
@@ -140,4 +210,5 @@ def clean_form_data(raw_form):
             chosen = values[-1]
         form_data[key] = chosen
     return form_data
+
 
