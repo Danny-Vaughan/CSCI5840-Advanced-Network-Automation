@@ -1,10 +1,19 @@
-name: Test Runner Setup
+name: RB Corp CI/CD Pipeline
 
-on: [push]
+on:
+  push:
+    branches: [ "main" ]
 
 jobs:
-  hello-world:
+  deploy-and-test:
     runs-on: self-hosted
     steps:
+      - uses: actions/checkout@v3
+
       - name: Print message
-        run: echo "Runner is working!"
+        run: echo "Running unit tests"
+      - name: Running config script
+        run: sudo python3 /home/student/CSCI5840-Advanced-Network-Automation/Ansible/main.py
+      - name: Run unit test script
+        run: sudo python3 /home/student/CSCI5840-Advanced-Network-Automation/Scripts/Tools/unit_test.py
+
