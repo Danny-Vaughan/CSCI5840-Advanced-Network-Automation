@@ -4,6 +4,7 @@ all:
       hosts:
         R1: ''
         R2: ''
+        Test2: ''
     edge_router:
       hosts:
         R3: ''
