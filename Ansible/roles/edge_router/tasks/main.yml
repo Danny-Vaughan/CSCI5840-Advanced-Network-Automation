@@ -7,6 +7,6 @@
 - name: Generate configuration files
   template: 
     src: edge_router.j2 
-    dest: "/home/student/CSCI5840-Advanced-Network-Automation/Ansible/configs/{{item.hostname}}.txt"
+    dest: "/home/student/CSCI5840-Advanced-Network-Automation/Ansible/candidate_configs/{{item.hostname}}.txt"
   loop: "{{ devices | default([]) }}"
   when: devices is defined

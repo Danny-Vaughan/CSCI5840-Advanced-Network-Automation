@@ -31,6 +31,9 @@ devices:
   - name: Loopback0
     no_switchport: false
     ipv4: 1.0.0.3/32
+  - name: Management0
+    no_switchport: false
+    ipv4: 172.20.20.103/24
   routing:
     router_id: 1.0.0.3
     ospf_process: '10'
@@ -78,6 +81,9 @@ devices:
   - name: Loopback0
     no_switchport: false
     ipv4: 1.0.0.4/32
+  - name: Management0
+    no_switchport: false
+    ipv4: 172.20.20.104/24
   routing:
     router_id: 1.0.0.4
     ospf_process: '10'

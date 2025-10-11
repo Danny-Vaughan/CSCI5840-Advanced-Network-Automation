@@ -7,10 +7,11 @@ class UnitTestError(Exception):
     '''This was made to be raised if a test fails'''
     pass
 
+# Log into R3 and check that it has a correctly configured Loopback interface
 def check_loopback_ip():
     router = {
         "device_type": "arista_eos",
-        "ip": "172.20.20.15",
+        "ip": "172.20.20.103",
         "username": "admin",
         "password": "admin"
     }
@@ -27,10 +28,11 @@ def check_loopback_ip():
     except Exception as e:
         return f"Error: {e}"
 
+# Log into R4 and verify that it has a BGP peering connection with R5
 def check_bgp_neighbor():
     router = {
         "device_type": "arista_eos",
-        "ip": "172.20.20.5",
+        "ip": "172.20.20.104",
         "username": "admin",
         "password": "admin"
     }
@@ -48,10 +50,11 @@ def check_bgp_neighbor():
     except Exception as e:
         return f"Error: {e}"
 
+# Log into R1 and verify that it can ping the web server
 def check_ping():
     router = {
         "device_type": "arista_eos",
-        "ip": "172.20.20.2",
+        "ip": "172.20.20.101",
         "username": "admin",
         "password": "admin"
     }
@@ -67,14 +70,18 @@ def check_ping():
     except Exception as e:
         return f"Error: {e}"
 
+
 def main():
     result1 = check_loopback_ip()
     result2 = check_bgp_neighbor()
     result3 = check_ping()
     if result1 == 1 or result2 == 1 or result3 == 1:
+        rollback_config()
         raise UnitTestError(f"Unit testing failed result1={result1}, result2={result2}, result3={result3}")
     else:
         print("Unit testing passed")
+        update_golden_configs()
+
         
 if __name__ == "__main__":
     main()

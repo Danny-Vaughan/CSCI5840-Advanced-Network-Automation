@@ -29,6 +29,9 @@ devices:
     description: trunk to S2
     mode: trunk
     no_switchport: false
+  - name: Management0
+    no_switchport: false
+    ipv4: 172.20.20.201/24
   routing: {}
 - device_type: switch
   hostname: S2
@@ -60,6 +63,9 @@ devices:
     description: trunk to S1
     mode: trunk
     no_switchport: false
+  - name: Management0
+    no_switchport: false
+    ipv4: 172.20.20.202/24
   routing:
     static_ipv4_network: 10.10.4.0/24
     static_ipv4_nexthop: 10.10.40.1
@@ -93,6 +99,9 @@ devices:
     description: To S4
     mode: trunk
     no_switchport: false
+  - name: Management0
+    no_switchport: false
+    ipv4: 172.20.20.203/24
   routing: {}
 - device_type: switch
   hostname: S4
@@ -119,4 +128,7 @@ devices:
     description: To S3
     mode: trunk
     no_switchport: false
+  - name: Management0
+    no_switchport: false
+    ipv4: 172.20.20.204/24
   routing: {}

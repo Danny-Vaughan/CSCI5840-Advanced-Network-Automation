@@ -1,60 +1,71 @@
-device_type,hostname,username,password,vlan_list,intf_name,intf_desc,intf_switchport_mode,intf_access_vlan,intf_no_switchport,intf_encapsulation,intf_ipv4,intf_ipv6,ospf_process,intf_ospf_area,bgp_asn,router_id,bgp_neighbors_ipv4,bgp_networks_ipv4,bgp_neighbors_ipv6,bgp_networks_ipv6,bgp_redistribute_ospf,bgp_redistribute_ospfv3,ospf_default_info,ospf_redistribute_bgp,ospf_networks,static_ipv4_network,static_ipv4_nexthop,static_ipv6_network,static_ipv6_nexthop,rip_networks,rip_enabled
-,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
-router,R1,admin,admin,"10,20,30,40,50",Ethernet1,Configured by Netmiko,,,TRUE,,,,10,,,10.0.0.1,,,,,,,,,,,,,,10.10.0.0;10.10.1.0,TRUE
-router,R1,admin,admin,"10,20,30,40,50",Ethernet1.40,,,,,40,10.10.3.1/28,2104::1/64,10,0.0.0.0,,10.0.0.1,,,,,,,,,10.0.0.1/32;10.10.3.0/28;10.10.4.0/24;10.10.0.0/28;10.10.1.0/28,,,,,10.10.0.0;10.10.1.0,TRUE
-router,R1,admin,admin,"10,20,30,40,50",Ethernet1.50,,,,,50,10.10.4.1/24,,10,,,10.0.0.1,,,,,,,,,,,,,,10.10.0.0;10.10.1.0,TRUE
-router,R1,admin,admin,"10,20,30,40,50",Ethernet2,,,,TRUE,,,,10,,,10.0.0.1,,,,,,,,,,,,,,10.10.0.0;10.10.1.0,TRUE
-router,R1,admin,admin,"10,20,30,40,50",Ethernet2.10,,,,,10,10.10.0.1/28,2101::1/64,10,0.0.0.0,,10.0.0.1,,,,,,,,,,,,,,10.10.0.0;10.10.1.0,TRUE
-router,R1,admin,admin,"10,20,30,40,50",Ethernet2.20,,,,,20,10.10.1.1/28,2102::1/64,10,0.0.0.0,,10.0.0.1,,,,,,,,,,,,,,10.10.0.0;10.10.1.0,TRUE
-router,R1,admin,admin,"10,20,30,40,50",Ethernet2.30,,,,,30,,2103::1/64,10,0.0.0.0,,10.0.0.1,,,,,,,,,,,,,,10.10.0.0;10.10.1.0,TRUE
-router,R1,admin,admin,"10,20,30,40,50",Ethernet2.50,,,,,50,10.10.40.1/24,,10,,,10.0.0.1,,,,,,,,,,,,,,10.10.0.0;10.10.1.0,TRUE
-router,R1,admin,admin,"10,20,30,40,50",Loopback0,,,,,,10.0.0.1/32,,10,,,10.0.0.1,,,,,,,,,,,,,,10.10.0.0;10.10.1.0,TRUE
-,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
-router,R2,admin,admin,"10,20,30,40,50",Ethernet1,,,,TRUE,,,,10,,,10.0.0.2,,,,,,,,,,,,,,10.10.0.0;10.10.1.0,TRUE
-router,R2,admin,admin,"10,20,30,40,50",Ethernet1.40,,,,,40,10.10.3.2/28,2104::2/64,10,0.0.0.0,,10.0.0.2,,,,,,,,,10.0.0.2/32;10.10.3.0/28;10.10.4.0/24;10.10.0.0/28;10.10.1.0/28,,,,,10.10.0.0;10.10.1.0,TRUE
-router,R2,admin,admin,"10,20,30,40,50",Ethernet1.50,,,,,50,10.10.4.2/24,,10,,,10.0.0.2,,,,,,,,,,,,,,10.10.0.0;10.10.1.0,TRUE
-router,R2,admin,admin,"10,20,30,40,50",Ethernet2,,,,TRUE,,,,10,,,10.0.0.2,,,,,,,,,,,,,,10.10.0.0;10.10.1.0,TRUE
-router,R2,admin,admin,"10,20,30,40,50",Ethernet2.10,,,,,10,10.10.0.2/28,2101::2/64,10,0.0.0.0,,10.0.0.2,,,,,,,,,,,,,,10.10.0.0;10.10.1.0,TRUE
-router,R2,admin,admin,"10,20,30,40,50",Ethernet2.20,,,,,20,10.10.1.2/28,2102::2/64,10,0.0.0.0,,10.0.0.2,,,,,,,,,,,,,,10.10.0.0;10.10.1.0,TRUE
-router,R2,admin,admin,"10,20,30,40,50",Ethernet2.30,,,,,30,,2103::2/64,10,0.0.0.0,,10.0.0.2,,,,,,,,,,,,,,10.10.0.0;10.10.1.0,TRUE
-router,R2,admin,admin,"10,20,30,40,50",Ethernet2.50,,,,,50,10.10.40.2/24,,10,,,10.0.0.2,,,,,,,,,,,,,,10.10.0.0;10.10.1.0,TRUE
-router,R2,admin,admin,"10,20,30,40,50",Loopback0,,,,,,10.0.0.2/32,,10,,,10.0.0.2,,,,,,,,,,,,,,10.10.0.0;10.10.1.0,TRUE
-,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
-edge_router,R3,admin,admin,"40,50",Ethernet1,,,,TRUE,,203.0.113.2/30,2111::1/64,10,,65030,1.0.0.3,1.0.0.5 remote-as 65050,10.0.0.0/8,2111::2 remote-as 65050,2111::/64,TRUE,TRUE,TRUE,TRUE,10.10.3.0/28;10.10.4.0/24,0.0.0.0/0,,,,,
-edge_router,R3,admin,admin,"40,50",Ethernet2,,,,TRUE,,10.10.0.65/28,2112::1/64,10,0.0.0.0,,1.0.0.3,1.0.0.5 remote-as 65050,10.0.0.0/8,2111::2 remote-as 65050,2111::/64,TRUE,TRUE,TRUE,TRUE,10.10.3.0/28;10.10.4.0/24,0.0.0.0/0,,,,,
-edge_router,R3,admin,admin,"40,50",Ethernet3,,,,TRUE,,,,10,,,1.0.0.3,1.0.0.5 remote-as 65050,10.0.0.0/8,2111::2 remote-as 65050,2111::/64,TRUE,TRUE,TRUE,TRUE,10.10.3.0/28;10.10.4.0/24,0.0.0.0/0,,,,,
-edge_router,R3,admin,admin,"40,50",Ethernet3.40,,,,,40,10.10.3.3/28,2104::3/64,10,0.0.0.0,,1.0.0.3,1.0.0.5 remote-as 65050,10.0.0.0/8,2111::2 remote-as 65050,2111::/64,TRUE,TRUE,TRUE,TRUE,10.10.3.0/28;10.10.4.0/24,0.0.0.0/0,,,,,
-edge_router,R3,admin,admin,"40,50",Ethernet3.50,,,,,50,10.10.4.3/24,,10,,,1.0.0.3,1.0.0.5 remote-as 65050,10.0.0.0/8,2111::2 remote-as 65050,2111::/64,TRUE,TRUE,TRUE,TRUE,10.10.3.0/28;10.10.4.0/24,0.0.0.0/0,,,,,
-edge_router,R3,admin,admin,"40,50",Loopback0,,,,,,1.0.0.3/32,,10,,,1.0.0.3,1.0.0.5 remote-as 65050,10.0.0.0/8,2111::2 remote-as 65050,2111::/64,TRUE,TRUE,TRUE,TRUE,10.10.3.0/28;10.10.4.0/24,0.0.0.0/0,,,,,
-,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
-edge_router,R4,admin,admin,"40,50",Ethernet1,,,,TRUE,,203.0.113.6/30,2114::1/64,10,,65030,1.0.0.4,1.0.0.5 remote-as 65050,10.0.0.0/8,2114::2 remote-as 65050,2101::/64;2102::/64;2103::/64;2104::/64,TRUE,TRUE,TRUE,TRUE,10.10.3.0/28;10.10.4.0/24,0.0.0.0/0,203.0.113.5,::/0,2114::2,,
-edge_router,R4,admin,admin,"40,50",Ethernet2,,,,TRUE,,10.10.0.66/28,2112::2/64,10,0.0.0.0,,1.0.0.4,1.0.0.5 remote-as 65050,10.0.0.0/8,2114::2 remote-as 65050,2101::/64;2102::/64;2103::/64;2104::/64,TRUE,TRUE,TRUE,TRUE,10.10.3.0/28;10.10.4.0/24,0.0.0.0/0,203.0.113.5,::/0,2114::2,,
-edge_router,R4,admin,admin,"40,50",Ethernet3,,,,TRUE,,,,10,,,1.0.0.4,1.0.0.5 remote-as 65050,10.0.0.0/8,2114::2 remote-as 65050,2101::/64;2102::/64;2103::/64;2104::/64,TRUE,TRUE,TRUE,TRUE,10.10.3.0/28;10.10.4.0/24,0.0.0.0/0,203.0.113.5,::/0,2114::2,,
-edge_router,R4,admin,admin,"40,50",Ethernet3.40,,,,,40,10.10.3.4/28,2104::4/64,10,0.0.0.0,,1.0.0.4,1.0.0.5 remote-as 65050,10.0.0.0/8,2114::2 remote-as 65050,2101::/64;2102::/64;2103::/64;2104::/64,TRUE,TRUE,TRUE,TRUE,10.10.3.0/28;10.10.4.0/24,0.0.0.0/0,203.0.113.5,::/0,2114::2,,
-edge_router,R4,admin,admin,"40,50",Ethernet3.50,,,,,50,10.10.4.4/24,,10,,,1.0.0.4,1.0.0.5 remote-as 65050,10.0.0.0/8,2114::2 remote-as 65050,2101::/64;2102::/64;2103::/64;2104::/64,TRUE,TRUE,TRUE,TRUE,10.10.3.0/28;10.10.4.0/24,0.0.0.0/0,203.0.113.5,::/0,2114::2,,
-edge_router,R4,admin,admin,"40,50",Loopback0,,,,,,1.0.0.4/32,,10,,,1.0.0.4,1.0.0.5 remote-as 65050,10.0.0.0/8,2114::2 remote-as 65050,2101::/64;2102::/64;2103::/64;2104::/64,TRUE,TRUE,TRUE,TRUE,10.10.3.0/28;10.10.4.0/24,0.0.0.0/0,203.0.113.5,::/0,2114::2,,
-,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
-switch,S1,admin,admin,"10,20,30,50",Vlan50,,,,,,10.10.40.3/24,,,,,,,,,,,,,,,,,,,,
-switch,S1,admin,admin,"10,20,30,50",Ethernet1,,trunk,,,,,,,,,,,,,,,,,,,,,,,,
-switch,S1,admin,admin,"10,20,30,50",Ethernet2,to H1,access,10,,,,,,,,,,,,,,,,,,,,,,,
-switch,S1,admin,admin,"10,20,30,50",Ethernet3,to H2,access,20,,,,,,,,,,,,,,,,,,,,,,,
-switch,S1,admin,admin,"10,20,30,50",Ethernet4,trunk to S2,trunk,,,,,,,,,,,,,,,,,,,,,,,,
-,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
-switch,S2,admin,admin,"10,20,30,50",Vlan50,,,,,,10.10.40.4/24,,,,,,,,,,,,,,,10.10.4.0/24,10.10.40.1,,,,
-switch,S2,admin,admin,"10,20,30,50",Ethernet1,,trunk,,,,,,,,,,,,,,,,,,,10.10.4.0/24,10.10.40.1,,,,
-switch,S2,admin,admin,"10,20,30,50",Ethernet2,to H3,access,10,,,,,,,,,,,,,,,,,,10.10.4.0/24,10.10.40.1,,,,
-switch,S2,admin,admin,"10,20,30,50",Ethernet3,to H4,access,30,,,,,,,,,,,,,,,,,,10.10.4.0/24,10.10.40.1,,,,
-switch,S2,admin,admin,"10,20,30,50",Ethernet4,trunk to S1,trunk,,,,,,,,,,,,,,,,,,,10.10.4.0/24,10.10.40.1,,,,
-,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
-switch,S3,admin,admin,"10,20,30,50",Vlan50,,,,,,10.10.4.7/24,,,,,,,,,,,,,,,,,,,,
-switch,S3,admin,admin,"10,20,30,50",Ethernet1,To R3,trunk,,,,,,,,,,,,,,,,,,,,,,,,
-switch,S3,admin,admin,"10,20,30,50",Ethernet2,To R1,trunk,,,,,,,,,,,,,,,,,,,,,,,,
-switch,S3,admin,admin,"10,20,30,50",Ethernet3,To NMAS,access,50,,,,,,,,,,,,,,,,,,,,,,,
-switch,S3,admin,admin,"10,20,30,50",Ethernet4,To S4,trunk,,,,,,,,,,,,,,,,,,,,,,,,
-,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
-switch,S4,admin,admin,"10,20,30,50",Vlan50,,,,,,10.10.4.8/24,,,,,,,,,,,,,,,,,,,,
-switch,S4,admin,admin,"10,20,30,50",Ethernet1,To R4,trunk,,,,,,,,,,,,,,,,,,,,,,,,
-switch,S4,admin,admin,"10,20,30,50",Ethernet2,To R2,trunk,,,,,,,,,,,,,,,,,,,,,,,,
-switch,S4,admin,admin,"10,20,30,50",Ethernet4,To S3,trunk,,,,,,,,,,,,,,,,,,,,,,,,
-,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
-
+device_type,hostname,username,password,vlan_list,intf_name,intf_desc,intf_switchport_mode,intf_access_vlan,intf_no_switchport,intf_encapsulation,intf_ipv4,intf_ipv6,ospf_process,intf_ospf_area,bgp_asn,router_id,bgp_neighbors_ipv4,bgp_networks_ipv4,bgp_neighbors_ipv6,bgp_networks_ipv6,bgp_redistribute_ospf,bgp_redistribute_ospfv3,ospf_default_info,ospf_redistribute_bgp,ospf_networks,static_ipv4_network,static_ipv4_nexthop,static_ipv6_network,static_ipv6_nexthop,rip_networks,rip_enabled,netmiko_device_type,management_ip
+,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+router,R1,admin,admin,"10,20,30,40,50",Ethernet1,,,,TRUE,,,,10,,,10.0.0.1,,,,,,,,,,,,,,10.10.0.0;10.10.1.0,TRUE,arista_eos,172.20.20.101
+router,R1,admin,admin,"10,20,30,40,50",Ethernet1.40,,,,,40,10.10.3.1/28,2104::1/64,10,0.0.0.0,,10.0.0.1,,,,,,,,,10.0.0.1/32;10.10.3.0/28;10.10.4.0/24;10.10.0.0/28;10.10.1.0/28,,,,,10.10.0.0;10.10.1.0,TRUE,arista_eos,172.20.20.101
+router,R1,admin,admin,"10,20,30,40,50",Ethernet1.50,,,,,50,10.10.4.1/24,,10,,,10.0.0.1,,,,,,,,,,,,,,10.10.0.0;10.10.1.0,TRUE,arista_eos,172.20.20.101
+router,R1,admin,admin,"10,20,30,40,50",Ethernet2,,,,TRUE,,,,10,,,10.0.0.1,,,,,,,,,,,,,,10.10.0.0;10.10.1.0,TRUE,arista_eos,172.20.20.101
+router,R1,admin,admin,"10,20,30,40,50",Ethernet2.10,,,,,10,10.10.0.1/28,2101::1/64,10,0.0.0.0,,10.0.0.1,,,,,,,,,,,,,,10.10.0.0;10.10.1.0,TRUE,arista_eos,172.20.20.101
+router,R1,admin,admin,"10,20,30,40,50",Ethernet2.20,,,,,20,10.10.1.1/28,2102::1/64,10,0.0.0.0,,10.0.0.1,,,,,,,,,,,,,,10.10.0.0;10.10.1.0,TRUE,arista_eos,172.20.20.101
+router,R1,admin,admin,"10,20,30,40,50",Ethernet2.30,,,,,30,,2103::1/64,10,0.0.0.0,,10.0.0.1,,,,,,,,,,,,,,10.10.0.0;10.10.1.0,TRUE,arista_eos,172.20.20.101
+router,R1,admin,admin,"10,20,30,40,50",Ethernet2.50,,,,,50,10.10.40.1/24,,10,,,10.0.0.1,,,,,,,,,,,,,,10.10.0.0;10.10.1.0,TRUE,arista_eos,172.20.20.101
+router,R1,admin,admin,"10,20,30,40,50",Loopback0,,,,,,10.0.0.1/32,,10,,,10.0.0.1,,,,,,,,,,,,,,10.10.0.0;10.10.1.0,TRUE,arista_eos,172.20.20.101
+router,R1,admin,admin,"10,20,30,40,50",Management0,,,,,,172.20.20.101/24,,10,,,10.0.0.1,,,,,,,,,,,,,,10.10.0.0;10.10.1.0,TRUE,arista_eos,172.20.20.101
+,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+router,R2,admin,admin,"10,20,30,40,50",Ethernet1,,,,TRUE,,,,10,,,10.0.0.2,,,,,,,,,,,,,,10.10.0.0;10.10.1.0,TRUE,arista_eos,172.20.20.102
+router,R2,admin,admin,"10,20,30,40,50",Ethernet1.40,,,,,40,10.10.3.2/28,2104::2/64,10,0.0.0.0,,10.0.0.2,,,,,,,,,10.0.0.2/32;10.10.3.0/28;10.10.4.0/24;10.10.0.0/28;10.10.1.0/28,,,,,10.10.0.0;10.10.1.0,TRUE,arista_eos,172.20.20.102
+router,R2,admin,admin,"10,20,30,40,50",Ethernet1.50,,,,,50,10.10.4.2/24,,10,,,10.0.0.2,,,,,,,,,,,,,,10.10.0.0;10.10.1.0,TRUE,arista_eos,172.20.20.102
+router,R2,admin,admin,"10,20,30,40,50",Ethernet2,,,,TRUE,,,,10,,,10.0.0.2,,,,,,,,,,,,,,10.10.0.0;10.10.1.0,TRUE,arista_eos,172.20.20.102
+router,R2,admin,admin,"10,20,30,40,50",Ethernet2.10,,,,,10,10.10.0.2/28,2101::2/64,10,0.0.0.0,,10.0.0.2,,,,,,,,,,,,,,10.10.0.0;10.10.1.0,TRUE,arista_eos,172.20.20.102
+router,R2,admin,admin,"10,20,30,40,50",Ethernet2.20,,,,,20,10.10.1.2/28,2102::2/64,10,0.0.0.0,,10.0.0.2,,,,,,,,,,,,,,10.10.0.0;10.10.1.0,TRUE,arista_eos,172.20.20.102
+router,R2,admin,admin,"10,20,30,40,50",Ethernet2.30,,,,,30,,2103::2/64,10,0.0.0.0,,10.0.0.2,,,,,,,,,,,,,,10.10.0.0;10.10.1.0,TRUE,arista_eos,172.20.20.102
+router,R2,admin,admin,"10,20,30,40,50",Ethernet2.50,,,,,50,10.10.40.2/24,,10,,,10.0.0.2,,,,,,,,,,,,,,10.10.0.0;10.10.1.0,TRUE,arista_eos,172.20.20.102
+router,R2,admin,admin,"10,20,30,40,50",Loopback0,,,,,,10.0.0.2/32,,10,,,10.0.0.2,,,,,,,,,,,,,,10.10.0.0;10.10.1.0,TRUE,arista_eos,172.20.20.102
+router,R2,admin,admin,"10,20,30,40,50",Management0,,,,,,172.20.20.102/24,,10,,,10.0.0.1,,,,,,,,,,,,,,10.10.0.0;10.10.1.0,TRUE,arista_eos,172.20.20.102
+,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+edge_router,R3,admin,admin,"40,50",Ethernet1,,,,TRUE,,203.0.113.2/30,2111::1/64,10,,65030,1.0.0.3,1.0.0.5 remote-as 65050,10.0.0.0/8,2111::2 remote-as 65050,2111::/64,TRUE,TRUE,TRUE,TRUE,10.10.3.0/28;10.10.4.0/24,0.0.0.0/0,,,,,,arista_eos,172.20.20.103
+edge_router,R3,admin,admin,"40,50",Ethernet2,,,,TRUE,,10.10.0.65/28,2112::1/64,10,0.0.0.0,,1.0.0.3,1.0.0.5 remote-as 65050,10.0.0.0/8,2111::2 remote-as 65050,2111::/64,TRUE,TRUE,TRUE,TRUE,10.10.3.0/28;10.10.4.0/24,0.0.0.0/0,,,,,,arista_eos,172.20.20.103
+edge_router,R3,admin,admin,"40,50",Ethernet3,,,,TRUE,,,,10,,,1.0.0.3,1.0.0.5 remote-as 65050,10.0.0.0/8,2111::2 remote-as 65050,2111::/64,TRUE,TRUE,TRUE,TRUE,10.10.3.0/28;10.10.4.0/24,0.0.0.0/0,,,,,,arista_eos,172.20.20.103
+edge_router,R3,admin,admin,"40,50",Ethernet3.40,,,,,40,10.10.3.3/28,2104::3/64,10,0.0.0.0,,1.0.0.3,1.0.0.5 remote-as 65050,10.0.0.0/8,2111::2 remote-as 65050,2111::/64,TRUE,TRUE,TRUE,TRUE,10.10.3.0/28;10.10.4.0/24,0.0.0.0/0,,,,,,arista_eos,172.20.20.103
+edge_router,R3,admin,admin,"40,50",Ethernet3.50,,,,,50,10.10.4.3/24,,10,,,1.0.0.3,1.0.0.5 remote-as 65050,10.0.0.0/8,2111::2 remote-as 65050,2111::/64,TRUE,TRUE,TRUE,TRUE,10.10.3.0/28;10.10.4.0/24,0.0.0.0/0,,,,,,arista_eos,172.20.20.103
+edge_router,R3,admin,admin,"40,50",Loopback0,,,,,,1.0.0.3/32,,10,,,1.0.0.3,1.0.0.5 remote-as 65050,10.0.0.0/8,2111::2 remote-as 65050,2111::/64,TRUE,TRUE,TRUE,TRUE,10.10.3.0/28;10.10.4.0/24,0.0.0.0/0,,,,,,arista_eos,172.20.20.103
+edge_router,R3,admin,admin,"40,50",Management0,,,,,,172.20.20.103/24,,10,,,10.0.0.1,,,,,,,,,,,,,,10.10.0.0;10.10.1.0,TRUE,arista_eos,172.20.20.103
+,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+edge_router,R4,admin,admin,"40,50",Ethernet1,,,,TRUE,,203.0.113.6/30,2114::1/64,10,,65030,1.0.0.4,1.0.0.5 remote-as 65050,10.0.0.0/8,2114::2 remote-as 65050,2101::/64;2102::/64;2103::/64;2104::/64,TRUE,TRUE,TRUE,TRUE,10.10.3.0/28;10.10.4.0/24,0.0.0.0/0,203.0.113.5,::/0,2114::2,,,arista_eos,172.20.20.104
+edge_router,R4,admin,admin,"40,50",Ethernet2,,,,TRUE,,10.10.0.66/28,2112::2/64,10,0.0.0.0,,1.0.0.4,1.0.0.5 remote-as 65050,10.0.0.0/8,2114::2 remote-as 65050,2101::/64;2102::/64;2103::/64;2104::/64,TRUE,TRUE,TRUE,TRUE,10.10.3.0/28;10.10.4.0/24,0.0.0.0/0,203.0.113.5,::/0,2114::2,,,arista_eos,172.20.20.104
+edge_router,R4,admin,admin,"40,50",Ethernet3,,,,TRUE,,,,10,,,1.0.0.4,1.0.0.5 remote-as 65050,10.0.0.0/8,2114::2 remote-as 65050,2101::/64;2102::/64;2103::/64;2104::/64,TRUE,TRUE,TRUE,TRUE,10.10.3.0/28;10.10.4.0/24,0.0.0.0/0,203.0.113.5,::/0,2114::2,,,arista_eos,172.20.20.104
+edge_router,R4,admin,admin,"40,50",Ethernet3.40,,,,,40,10.10.3.4/28,2104::4/64,10,0.0.0.0,,1.0.0.4,1.0.0.5 remote-as 65050,10.0.0.0/8,2114::2 remote-as 65050,2101::/64;2102::/64;2103::/64;2104::/64,TRUE,TRUE,TRUE,TRUE,10.10.3.0/28;10.10.4.0/24,0.0.0.0/0,203.0.113.5,::/0,2114::2,,,arista_eos,172.20.20.104
+edge_router,R4,admin,admin,"40,50",Ethernet3.50,,,,,50,10.10.4.4/24,,10,,,1.0.0.4,1.0.0.5 remote-as 65050,10.0.0.0/8,2114::2 remote-as 65050,2101::/64;2102::/64;2103::/64;2104::/64,TRUE,TRUE,TRUE,TRUE,10.10.3.0/28;10.10.4.0/24,0.0.0.0/0,203.0.113.5,::/0,2114::2,,,arista_eos,172.20.20.104
+edge_router,R4,admin,admin,"40,50",Loopback0,,,,,,1.0.0.4/32,,10,,,1.0.0.4,1.0.0.5 remote-as 65050,10.0.0.0/8,2114::2 remote-as 65050,2101::/64;2102::/64;2103::/64;2104::/64,TRUE,TRUE,TRUE,TRUE,10.10.3.0/28;10.10.4.0/24,0.0.0.0/0,203.0.113.5,::/0,2114::2,,,arista_eos,172.20.20.104
+edge_router,R4,admin,admin,"40,50",Management0,,,,,,172.20.20.104/24,,10,,,10.0.0.1,,,,,,,,,,,,,,,,arista_eos,172.20.20.104
+,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+switch,S1,admin,admin,"10,20,30,50",Vlan50,,,,,,10.10.40.3/24,,,,,,,,,,,,,,,,,,,,,arista_eos,172.20.20.201
+switch,S1,admin,admin,"10,20,30,50",Ethernet1,,trunk,,,,,,,,,,,,,,,,,,,,,,,,,arista_eos,172.20.20.201
+switch,S1,admin,admin,"10,20,30,50",Ethernet2,to H1,access,10,,,,,,,,,,,,,,,,,,,,,,,,arista_eos,172.20.20.201
+switch,S1,admin,admin,"10,20,30,50",Ethernet3,to H2,access,20,,,,,,,,,,,,,,,,,,,,,,,,arista_eos,172.20.20.201
+switch,S1,admin,admin,"10,20,30,50",Ethernet4,trunk to S2,trunk,,,,,,,,,,,,,,,,,,,,,,,,,arista_eos,172.20.20.201
+switch,S1,admin,admin,"10,20,30,50",Management0,,,,,,172.20.20.201/24,,,,,,,,,,,,,,,,,,,,,arista_eos,172.20.20.201
+,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+switch,S2,admin,admin,"10,20,30,50",Vlan50,,,,,,10.10.40.4/24,,,,,,,,,,,,,,,10.10.4.0/24,10.10.40.1,,,,,arista_eos,172.20.20.202
+switch,S2,admin,admin,"10,20,30,50",Ethernet1,,trunk,,,,,,,,,,,,,,,,,,,10.10.4.0/24,10.10.40.1,,,,,arista_eos,172.20.20.202
+switch,S2,admin,admin,"10,20,30,50",Ethernet2,to H3,access,10,,,,,,,,,,,,,,,,,,10.10.4.0/24,10.10.40.1,,,,,arista_eos,172.20.20.202
+switch,S2,admin,admin,"10,20,30,50",Ethernet3,to H4,access,30,,,,,,,,,,,,,,,,,,10.10.4.0/24,10.10.40.1,,,,,arista_eos,172.20.20.202
+switch,S2,admin,admin,"10,20,30,50",Ethernet4,trunk to S1,trunk,,,,,,,,,,,,,,,,,,,10.10.4.0/24,10.10.40.1,,,,,arista_eos,172.20.20.202
+switch,S2,admin,admin,"10,20,30,50",Management0,,,,,,172.20.20.202/24,,,,,,,,,,,,,,,,,,,,,arista_eos,172.20.20.202
+,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+switch,S3,admin,admin,"10,20,30,50",Vlan50,,,,,,10.10.4.7/24,,,,,,,,,,,,,,,,,,,,,arista_eos,172.20.20.203
+switch,S3,admin,admin,"10,20,30,50",Ethernet1,To R3,trunk,,,,,,,,,,,,,,,,,,,,,,,,,arista_eos,172.20.20.203
+switch,S3,admin,admin,"10,20,30,50",Ethernet2,To R1,trunk,,,,,,,,,,,,,,,,,,,,,,,,,arista_eos,172.20.20.203
+switch,S3,admin,admin,"10,20,30,50",Ethernet3,To NMAS,access,50,,,,,,,,,,,,,,,,,,,,,,,,arista_eos,172.20.20.203
+switch,S3,admin,admin,"10,20,30,50",Ethernet4,To S4,trunk,,,,,,,,,,,,,,,,,,,,,,,,,arista_eos,172.20.20.203
+switch,S3,admin,admin,"10,20,30,50",Management0,,,,,,172.20.20.203/24,,,,,,,,,,,,,,,,,,,,,arista_eos,172.20.20.203
+,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+switch,S4,admin,admin,"10,20,30,50",Vlan50,,,,,,10.10.4.8/24,,,,,,,,,,,,,,,,,,,,,arista_eos,172.20.20.204
+switch,S4,admin,admin,"10,20,30,50",Ethernet1,To R4,trunk,,,,,,,,,,,,,,,,,,,,,,,,,arista_eos,172.20.20.204
+switch,S4,admin,admin,"10,20,30,50",Ethernet2,To R2,trunk,,,,,,,,,,,,,,,,,,,,,,,,,arista_eos,172.20.20.204
+switch,S4,admin,admin,"10,20,30,50",Ethernet4,To S3,trunk,,,,,,,,,,,,,,,,,,,,,,,,,arista_eos,172.20.20.204
+switch,S4,admin,admin,"10,20,30,50",Management0,,,,,,172.20.20.204/24,,,,,,,,,,,,,,,,,,,,,arista_eos,172.20.20.204
+router,Test,test,test,"10,20,30,40,50",Ethernet1,This is a test,,,TRUE,,1.1.1.1/24,2001::2/64,10,,,1.1.1.1,,,,,,,,,"10.10.10.0/24,10.10.20.0/24",,,,,10.10.0.0/28;10.10.1.0/28,TRUE,,
+router,Test,test,test,"10,20,30,40,50",Ethernet2,Testing again,,,TRUE,,,2002::2/64,10,,,1.1.1.1,,,,,,,,,"10.10.10.0/24,10.10.20.0/24",,,,,10.10.0.0/28;10.10.1.0/28,TRUE,,
+router,Test2,test,test,"10,20,30,40,50",Ethernet1,This is a test,,,TRUE,,1.1.1.1/24,2001::2/64,10,,,1.1.1.1,,,,,,,,,"10.10.10.0/24,10.10.20.0/24",,,,,10.10.0.0/28;10.10.1.0/28,TRUE,,
+router,Test2,test,test,"10,20,30,40,50",Ethernet2,Testing again,,,TRUE,,2.2.2.2/24,2002::2/64,10,,,1.1.1.1,,,,,,,,,"10.10.10.0/24,10.10.20.0/24",,,,,10.10.0.0/28;10.10.1.0/28,TRUE,,
+router,R1,admin,admin,,Ethernet3,This is a test,,,TRUE,,10.20.30.40/24,2001::2/64,,,,,,,,,,,,,,,,,,,FALSE,,

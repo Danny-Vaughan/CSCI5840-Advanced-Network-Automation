@@ -1,4 +1,4 @@
-hostname S1
+hostname S2
 username admin secret admin
 
 snmp-server community public ro
@@ -20,24 +20,27 @@ vlan 50
 
 interface Vlan50
   no shut
-  ip address 10.10.40.3/24
+  ip address 10.10.40.4/24
 interface Ethernet1
   no shut
   switchport mode trunk
 interface Ethernet2
   no shut
-  description to H1
+  description to H3
   switchport mode access
   switchport access vlan 10
 interface Ethernet3
   no shut
-  description to H2
+  description to H4
   switchport mode access
-  switchport access vlan 20
+  switchport access vlan 30
 interface Ethernet4
   no shut
-  description trunk to S2
+  description trunk to S1
   switchport mode trunk
+interface Management0
+  no shut
+  ip address 172.20.20.202/24
 
 no ip routing
 

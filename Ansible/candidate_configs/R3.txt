@@ -1,4 +1,4 @@
-hostname R4
+hostname R3
 username admin secret admin
 
 snmp-server community public ro
@@ -19,13 +19,13 @@ vlan 50
 interface Ethernet1
   no shut
   no switchport
-  ip address 203.0.113.6/30
-  ipv6 address 2114::1/64
+  ip address 203.0.113.2/30
+  ipv6 address 2111::1/64
 interface Ethernet2
   no shut
   no switchport
-  ip address 10.10.0.66/28
-  ipv6 address 2112::2/64
+  ip address 10.10.0.65/28
+  ipv6 address 2112::1/64
   ipv6 ospf 10 area 0.0.0.0
 interface Ethernet3
   no shut
@@ -33,22 +33,25 @@ interface Ethernet3
 interface Ethernet3.40
   no shut
   encapsulation dot1q vlan 40
-  ip address 10.10.3.4/28
-  ipv6 address 2104::4/64
+  ip address 10.10.3.3/28
+  ipv6 address 2104::3/64
   ipv6 ospf 10 area 0.0.0.0
 interface Ethernet3.50
   no shut
   encapsulation dot1q vlan 50
-  ip address 10.10.4.4/24
+  ip address 10.10.4.3/24
 interface Loopback0
   no shut
-  ip address 1.0.0.4/32
+  ip address 1.0.0.3/32
+interface Management0
+  no shut
+  ip address 172.20.20.103/24
 
 ip routing
 ipv6 unicast-routing
 
 router bgp 65030
-  router-id 1.0.0.4
+  router-id 1.0.0.3
   neighbor 1.0.0.5 remote-as 65050
   redistribute ospf
   redistribute ospfv3
@@ -57,24 +60,18 @@ router bgp 65030
   network 10.0.0.0/8
 
   address-family ipv6
-  neighbor 2114::2 activate
-  network 2101::/64
-  network 2102::/64
-  network 2103::/64
-  network 2104::/64
+  neighbor 2111::2 activate
+  network 2111::/64
 redistribute ospfv3
 
 router ospf 10
-  router-id 1.0.0.4
+  router-id 1.0.0.3
   default-information originate
   redistribute bgp
 
 ipv6 router ospf 10
-  router-id 1.0.0.4
+  router-id 1.0.0.3
   redistribute bgp
   default-information originate
 
-ip route 0.0.0.0/0 203.0.113.5
-
-ip route ::/0 2114::2
 

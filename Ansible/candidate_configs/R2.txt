@@ -1,4 +1,4 @@
-hostname R1
+hostname R2
 username admin secret admin
 
 snmp-server community public ro
@@ -25,56 +25,58 @@ vlan 50
 interface Ethernet1
   no shut
   no switchport
-  description Configured by Netmiko
 interface Ethernet1.40
   no shut
   encapsulation dot1q vlan 40
-  ip address 10.10.3.1/28
-  ipv6 address 2104::1/64
+  ip address 10.10.3.2/28
+  ipv6 address 2104::2/64
   ipv6 ospf 10 area 0.0.0.0
 interface Ethernet1.50
   no shut
   encapsulation dot1q vlan 50
-  ip address 10.10.4.1/24
+  ip address 10.10.4.2/24
 interface Ethernet2
   no shut
   no switchport
 interface Ethernet2.10
   no shut
   encapsulation dot1q vlan 10
-  ip address 10.10.0.1/28
-  ipv6 address 2101::1/64
+  ip address 10.10.0.2/28
+  ipv6 address 2101::2/64
   ipv6 ospf 10 area 0.0.0.0
 interface Ethernet2.20
   no shut
   encapsulation dot1q vlan 20
-  ip address 10.10.1.1/28
-  ipv6 address 2102::1/64
+  ip address 10.10.1.2/28
+  ipv6 address 2102::2/64
   ipv6 ospf 10 area 0.0.0.0
 interface Ethernet2.30
   no shut
   encapsulation dot1q vlan 30
-  ipv6 address 2103::1/64
+  ipv6 address 2103::2/64
   ipv6 ospf 10 area 0.0.0.0
 interface Ethernet2.50
   no shut
   encapsulation dot1q vlan 50
-  ip address 10.10.40.1/24
+  ip address 10.10.40.2/24
 interface Loopback0
   no shut
-  ip address 10.0.0.1/32
+  ip address 10.0.0.2/32
+interface Management0
+  no shut
+  ip address 172.20.20.102/24
 
 ip routing
 ipv6 unicast-routing
 
 router ospf 10
-   router-id 10.0.0.1
-   network 10.10.3.1/28 area 0.0.0.0
-   network 10.10.0.1/28 area 0.0.0.0
-   network 10.10.1.1/28 area 0.0.0.0
+   router-id 10.0.0.2
+   network 10.10.3.2/28 area 0.0.0.0
+   network 10.10.0.2/28 area 0.0.0.0
+   network 10.10.1.2/28 area 0.0.0.0
 
 ipv6 router ospf 10
-   router-id 10.0.0.1
+   router-id 10.0.0.2
 
 router rip
    network 10.10.0.0

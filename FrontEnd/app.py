@@ -19,6 +19,11 @@ def grafana():
 def chronograf():
     return redirect("http://localhost:8888")
 
+@app.route('/get_golden_configs')
+def get_golden_configs():
+    saved_files, timestamp = functions.get_golden_configs()
+    return render_template('golden_configs.html', files=saved_files, timestamp=timestamp)
+
 @app.route("/configure", methods=["GET", "POST"])
 def configure():
     if request.method == "POST":

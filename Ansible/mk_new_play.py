@@ -17,7 +17,7 @@ def normalize_value(val):
     return val.strip() if val.strip() else None
 
 def build_inventory(input_csv_file, inventory_file):
-    """Create a minimal inventory with hostnames per device type."""
+    # Create a minimal inventory with hostnames per device type
     inventory = {"all": {"children": {}}}
     with open(input_csv_file, newline='') as csvfile:
         reader = csv.DictReader(csvfile)

@@ -12,8 +12,23 @@ jobs:
 
       - name: Print message
         run: echo "Running unit tests"
+
       - name: Running config script
         run: sudo python3 /home/student/CSCI5840-Advanced-Network-Automation/Ansible/main.py
+
       - name: Run unit test script
         run: sudo python3 /home/student/CSCI5840-Advanced-Network-Automation/Scripts/Tools/unit_test.py
+        continue-on-error: true
+
+      - name: Run backout
+        if: failure()
+        run: |
+          echo "Something went wrong, rolling back to most recent golden configuration"
+          sudo python3 /home/student/CSCI5840-Advanced-Network-Automation/Ansible/main.py --action rollback_config
+
+      - name: Get golden configs on pass
+        if: success()
+        run: |
+          echo "Unit testing passed, updating the golden configs"
+          sudo python3 /home/student/CSCI5840-Advanced-Network-Automation/FrontEnd/functions.py --action get_golden_configs
 

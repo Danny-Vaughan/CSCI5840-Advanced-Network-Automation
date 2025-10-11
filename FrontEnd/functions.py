@@ -1,106 +1,37 @@
 import csv
 import os
-from netmiko import ConnectHandler
 import re
+import pytz
+import subprocess
+from datetime import datetime
+from netmiko import ConnectHandler
+
 
 requirements = "/home/student/CSCI5840-Advanced-Network-Automation/Ansible/requirements.csv"
 
 # Define headers once so writer knows the correct fields
-headers = [
-    "device_type", "hostname", "username", "password", "vlan_list",
-    "intf_name", "intf_desc", "intf_switchport_mode", "intf_access_vlan",
-    "intf_no_switchport", "intf_encapsulation", "intf_ipv4", "intf_ipv6",
-    "ospf_process", "intf_ospf_area", "bgp_asn", "router_id",
-    "bgp_neighbors_ipv4", "bgp_networks_ipv4", "bgp_neighbors_ipv6",
-    "bgp_networks_ipv6", "bgp_redistribute_ospf", "bgp_redistribute_ospfv3",
-    "ospf_default_info", "ospf_redistribute_bgp", "ospf_networks",
-    "static_ipv4_network", "static_ipv4_nexthop", "static_ipv6_network",
-    "static_ipv6_nexthop", "rip_networks", "rip_enabled"
-]
+def get_fieldnames():
+    if os.path.exists(requirements):
+        with open(requirements, "r", newline="") as file:
+            data = csv.DictReader(file)
+            fieldnames = data.fieldnames
+            return fieldnames
 
-
-# Health check portal functions
-def connectivity_check(man_ip, target_ip):
-    router = {
-        "device_type": "arista_eos",
-        "ip": f"{man_ip}",
-        "username": "admin",
-        "password": "admin"
-    }
-    try:
-        with ConnectHandler(**router) as net_connect:
-            net_connect.enable()
-            output = net_connect.send_command(f"ping {target_ip}")
-            return output
-    except Exception as e:
-        return f"Error: {e}"
-
-def bgp_neighbors(man_ip):
-    router = {
-        "device_type": "arista_eos",
-        "ip": f"{man_ip}",
-        "username": "admin",
-        "password": "admin"
-    }
-    try:
-        with ConnectHandler(**router) as net_connect:
-            output = net_connect.send_command("show ip bgp summ")
-            if not output:
-                return f"no bgp configuration found"
-            neighbors = re.findall(r"(\d+\.\d+\.\d+\.\d+)", output)
-            return(f"BGP neighbors: {neighbors[1:]}")
-    except Exception as e:
-        return f"Error: {e}"
-
-def route_finder(man_ip, search_term):
-    router = {
-        "device_type": "arista_eos",
-        "ip": f"{man_ip}",
-        "username": "admin",
-        "password": "admin"
-    }
-    try:
-        with ConnectHandler(**router) as net_connect:
-            if search_term:
-                output = net_connect.send_command(f"show ip route | inc {search_term}")
-            else:
-                output = net_connect.send_command("show ip route")
-            return(output)
-    except Exception as e:
-        return f"Error: {e}"
-
-# Device selection for health check portal
-devices = {
-    "R1": "172.20.20.2",
-    "R2": "172.20.20.10",
-    "R3": "172.20.20.15",
-    "R4": "172.20.20.5",
-    "S1": "172.20.20.9",
-    "S2": "172.20.20.6",
-    "S3": "172.20.20.4",
-    "S4": "172.20.20.16"
-}
-
-def get_all_devices():
-    return list(devices.keys())
-
-def get_device_ip(name):
-    return devices.get(name)
-
+fieldnames = get_fieldnames()
 
 # Read requirements.csv for configuration and template generation functions
 def read_csv():
-    """Read CSV into list of dicts."""
+    """Read CSV into list of dictionaries"""
     if not os.path.exists(requirements):
         return []
-    with open(requirements, "r", newline="") as f:
-        return list(csv.DictReader(f))
+    with open(requirements, "r", newline="") as file:
+        return list(csv.DictReader(file))
 
 
 def write_csv(rows):
-    """Write list of dicts back to CSV with proper headers."""
-    with open(requirements, "w", newline="") as f:
-        writer = csv.DictWriter(f, fieldnames=headers)
+    """Write list of dictionaries back to CSV with proper headers."""
+    with open(requirements, "w", newline="") as file:
+        writer = csv.DictWriter(file, fieldnames=fieldnames)
         writer.writeheader()
         writer.writerows(rows)
 
@@ -114,7 +45,7 @@ def form_to_rows(form_data):
     interface_count = int(form_data.get("interface_count", 0))
 
     # Start with all base (non-interface) fields
-    base_fields = {key: form_data.get(key, "") for key in headers if not key.startswith("intf_")}
+    base_fields = {key: form_data.get(key, "") for key in fieldnames if not key.startswith("intf_")}
 
     # Normalize routing fields
     base_fields["router_id"] = form_data.get("router_id", "")
@@ -141,7 +72,6 @@ def form_to_rows(form_data):
         row["intf_ipv6"] = form_data.get(f"intf_ipv6_{i}", "")
         row["intf_ospf_area"] = form_data.get(f"intf_ospf_area_{i}", "")
         rows.append(row)
-
     return rows
 
 def merge_rows(existing_rows, new_rows, operation="update"):
@@ -212,3 +142,127 @@ def clean_form_data(raw_form):
     return form_data
 
 
+# Health check portal functions
+def connectivity_check(man_ip, target_ip):
+    router = {
+        "device_type": "arista_eos",
+        "ip": f"{man_ip}",
+        "username": "admin",
+        "password": "admin"
+    }
+    try:
+        with ConnectHandler(**router) as net_connect:
+            net_connect.enable()
+            output = net_connect.send_command(f"ping {target_ip}")
+            return output
+    except Exception as e:
+        return f"Error: {e}"
+
+def bgp_neighbors(man_ip):
+    router = {
+        "device_type": "arista_eos",
+        "ip": f"{man_ip}",
+        "username": "admin",
+        "password": "admin"
+    }
+    try:
+        with ConnectHandler(**router) as net_connect:
+            output = net_connect.send_command("show ip bgp summ")
+            if not output:
+                return f"no bgp configuration found"
+            neighbors = re.findall(r"(\d+\.\d+\.\d+\.\d+)", output)
+            return(f"BGP neighbors: {neighbors[1:]}")
+    except Exception as e:
+        return f"Error: {e}"
+
+def route_finder(man_ip, search_term):
+    router = {
+        "device_type": "arista_eos",
+        "ip": f"{man_ip}",
+        "username": "admin",
+        "password": "admin"
+    }
+    try:
+        with ConnectHandler(**router) as net_connect:
+            if search_term:
+                output = net_connect.send_command(f"show ip route | inc {search_term}")
+            else:
+                output = net_connect.send_command("show ip route")
+            return(output)
+    except Exception as e:
+        return f"Error: {e}"
+
+# Device selection for health check portal
+devices = {
+    "R1": "172.20.20.101",
+    "R2": "172.20.20.102",
+    "R3": "172.20.20.103",
+    "R4": "172.20.20.104",
+    "S1": "172.20.20.201",
+    "S2": "172.20.20.202",
+    "S3": "172.20.20.203",
+    "S4": "172.20.20.204"
+}
+
+def get_all_devices():
+    return list(devices.keys())
+
+def get_device_ip(name):
+    return devices.get(name)
+    
+
+def get_golden_configs():
+    # Pulls 'golden' configs from all managed devices via SSH using Netmiko
+    save_path = "/home/student/CSCI5840-Advanced-Network-Automation/Ansible/configs/"
+    archive_path = "/home/student/CSCI5840-Advanced-Network-Automation/Ansible/config_archive/"
+    os.makedirs(save_path, exist_ok=True)
+    os.makedirs(archive_path, exist_ok=True)
+    subprocess.run(f"mv {save_path}* {archive_path}", shell=True)
+    
+    mountain_tz = pytz.timezone("America/Denver")
+    timestamp = datetime.now(mountain_tz).strftime("%Y-%m-%d_%H-%M-%S")
+
+    saved_files = []
+    
+    for hostname, ip in devices.items():
+        device = {
+            "device_type": "arista_eos",
+            "host": ip,
+            "username": "admin",
+            "password": "admin",
+        }
+
+        try:
+            print(f"Connecting to {hostname} ({ip})...")
+            connection = ConnectHandler(**device)
+            connection.enable()
+            config_output = connection.send_command("show run")
+            connection.disconnect()
+
+            filename = f"{hostname}_golden_config_{timestamp}.txt"
+            filepath = os.path.join(save_path, filename)
+
+            with open(filepath, "w") as file:
+                file.write(config_output)
+
+            saved_files.append(filename)
+
+        except Exception as e:
+            print(f"Failed to get config from {hostname}: {e}")
+
+    return saved_files, timestamp
+
+# main function 
+def main():
+    if "--action" in sys.argv:
+        action = sys.argv[sys.argv.index("--action") + 1]
+        actions = {"get_golden_configs": get_golden_configs}
+        if action in actions:
+            print(f"Running action: {action}")
+            actions[action]()
+    else:
+        get_golden_configs()
+
+
+if __name__ == "__main__":
+    main()
