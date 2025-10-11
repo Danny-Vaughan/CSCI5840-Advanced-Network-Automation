@@ -214,7 +214,7 @@ def get_device_ip(name):
 
 def get_golden_configs():
     # Pulls 'golden' configs from all managed devices via SSH using Netmiko
-    save_path = "/home/student/CSCI5840-Advanced-Network-Automation/Ansible/configs/"
+    save_path = "/home/student/CSCI5840-Advanced-Network-Automation/Ansible/golden_configs/"
     archive_path = "/home/student/CSCI5840-Advanced-Network-Automation/Ansible/config_archive/"
     os.makedirs(save_path, exist_ok=True)
     os.makedirs(archive_path, exist_ok=True)

@@ -64,8 +64,4 @@ switch,S4,admin,admin,"10,20,30,50",Ethernet1,To R4,trunk,,,,,,,,,,,,,,,,,,,,,,,
 switch,S4,admin,admin,"10,20,30,50",Ethernet2,To R2,trunk,,,,,,,,,,,,,,,,,,,,,,,,,arista_eos,172.20.20.204
 switch,S4,admin,admin,"10,20,30,50",Ethernet4,To S3,trunk,,,,,,,,,,,,,,,,,,,,,,,,,arista_eos,172.20.20.204
 switch,S4,admin,admin,"10,20,30,50",Management0,,,,,,172.20.20.204/24,,,,,,,,,,,,,,,,,,,,,arista_eos,172.20.20.204
-router,Test,test,test,"10,20,30,40,50",Ethernet1,This is a test,,,TRUE,,1.1.1.1/24,2001::2/64,10,,,1.1.1.1,,,,,,,,,"10.10.10.0/24,10.10.20.0/24",,,,,10.10.0.0/28;10.10.1.0/28,TRUE,,
-router,Test,test,test,"10,20,30,40,50",Ethernet2,Testing again,,,TRUE,,,2002::2/64,10,,,1.1.1.1,,,,,,,,,"10.10.10.0/24,10.10.20.0/24",,,,,10.10.0.0/28;10.10.1.0/28,TRUE,,
-router,Test2,test,test,"10,20,30,40,50",Ethernet1,This is a test,,,TRUE,,1.1.1.1/24,2001::2/64,10,,,1.1.1.1,,,,,,,,,"10.10.10.0/24,10.10.20.0/24",,,,,10.10.0.0/28;10.10.1.0/28,TRUE,,
-router,Test2,test,test,"10,20,30,40,50",Ethernet2,Testing again,,,TRUE,,2.2.2.2/24,2002::2/64,10,,,1.1.1.1,,,,,,,,,"10.10.10.0/24,10.10.20.0/24",,,,,10.10.0.0/28;10.10.1.0/28,TRUE,,
 router,R1,admin,admin,,Ethernet3,This is a test,,,TRUE,,10.20.30.40/24,2001::2/64,,,,,,,,,,,,,,,,,,,FALSE,,
