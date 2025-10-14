@@ -144,12 +144,13 @@ def clean_form_data(raw_form):
 
 
 # Health check portal functions
-def connectivity_check(man_ip, target_ip):
+def connectivity_check(hostname, man_ip, target_ip):
+    creds = get_device_credentials()
     router = {
         "device_type": "arista_eos",
         "ip": f"{man_ip}",
-        "username": "admin",
-        "password": "admin"
+        "username": creds[hostname]["username"],
+        "password": creds[hostname]["password"],
     }
     try:
         with ConnectHandler(**router) as net_connect:
@@ -159,12 +160,13 @@ def connectivity_check(man_ip, target_ip):
     except Exception as e:
         return f"Error: {e}"
 
-def bgp_neighbors(man_ip):
+def bgp_neighbors(hostname, man_ip):
+    creds = get_device_credentials()
     router = {
         "device_type": "arista_eos",
         "ip": f"{man_ip}",
-        "username": "admin",
-        "password": "admin"
+        "username": creds[hostname]["username"],
+        "password": creds[hostname]["password"],
     }
     try:
         with ConnectHandler(**router) as net_connect:
@@ -176,12 +178,13 @@ def bgp_neighbors(man_ip):
     except Exception as e:
         return f"Error: {e}"
 
-def route_finder(man_ip, search_term):
+def route_finder(hostname, man_ip, search_term):
+    creds = get_device_credentials()
     router = {
         "device_type": "arista_eos",
         "ip": f"{man_ip}",
-        "username": "admin",
-        "password": "admin"
+        "username": creds[hostname]["username"],
+        "password": creds[hostname]["password"],
     }
     try:
         with ConnectHandler(**router) as net_connect:
@@ -216,6 +219,7 @@ def get_golden_configs():
     # Pulls 'golden' configs from all managed devices via SSH using Netmiko
     save_path = "/home/student/CSCI5840-Advanced-Network-Automation/Ansible/golden_configs/"
     archive_path = "/home/student/CSCI5840-Advanced-Network-Automation/Ansible/config_archive/"
+    creds = get_device_credentials()
     os.makedirs(save_path, exist_ok=True)
     os.makedirs(archive_path, exist_ok=True)
     subprocess.run(f"mv {save_path}* {archive_path}", shell=True)
@@ -229,8 +233,8 @@ def get_golden_configs():
         device = {
             "device_type": "arista_eos",
             "host": ip,
-            "username": "admin",
-            "password": "admin",
+            "username": creds[hostname]["username"],
+            "password": creds[hostname]["password"],
         }
 
         try:
@@ -252,6 +256,24 @@ def get_golden_configs():
             print(f"Failed to get config from {hostname}: {e}")
 
     return saved_files, timestamp
+
+
+def get_device_credentials():
+    # Reads credentials for each device from requirements.csv
+    creds = {}
+    try:
+        with open(requirements, newline="") as file:
+            reader = csv.DictReader(file)
+            for row in reader:
+                hostname = row.get("hostname", "").strip()
+                username = row.get("username", "").strip()
+                password = row.get("password", "").strip()
+                if hostname and username and password:
+                    creds[hostname] = {"username": username, "password": password}
+    except Exception as e:
+        print(f"Error reading credentials: {e}")
+    return creds
+
 
 # main function 
 def main():

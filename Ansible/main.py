@@ -120,14 +120,14 @@ def mk_play_run():
 
 
 # basic function to use netmiko to configure a device
-def Config(man_ip, config_file): 
+def Config(man_ip, config_file, username="admin", password="admin"): 
     try:
 
         login = {
                 "device_type": "arista_eos",
-                "host": f"{man_ip}",
-                "username": f"admin",
-                "password": f"admin"
+                "host": man_ip,
+                "username": username,
+                "password": password
         }
 
         with ConnectHandler(**login) as net_connect:
@@ -159,6 +159,7 @@ def parse_devices_from_csv(csv_file=requirements):
 def topology_config():
     # Configure all devices in parallel using candidate configs.
     devices = parse_devices_from_csv()
+    creds = get_device_credentials()
     if not devices:
         print("No devices found to configure.")
         return
@@ -170,7 +171,7 @@ def topology_config():
             if not os.path.exists(config_path):
                 print(f"No candidate config found for {hostname} ({config_path})")
                 continue
-            futures.append(executor.submit(Config, man_ip=mgmt_ip, config_file=config_path))
+            futures.append(executor.submit(Config, man_ip=mgmt_ip, config_file=config_path, username=creds[hostname]["username"], password=creds[hostname]["password"]))
 
         for future in cf.as_completed(futures):
             try:
@@ -182,6 +183,7 @@ def topology_config():
 def rollback_config():
     # Rolls back each device to the most recent golden configuration file.
     devices = parse_devices_from_csv()
+    creds = get_device_credentials()
     if not devices:
         print("No devices found for rollback")
         return
@@ -195,12 +197,30 @@ def rollback_config():
                 continue
 
             rollback_file = max(rollback_matches, key=os.path.getmtime)
-            futures.append(executor.submit(Config, man_ip=mgmt_ip, config_file=rollback_file))
+            futures.append(executor.submit(Config, man_ip=mgmt_ip, config_file=rollback_file, username=creds[hostname]["username"], password=creds[hostname]["password"]))
         for future in cf.as_completed(futures):
             try:
                 future.result()
             except Exception as e:
                 print(f"Rollback error: {e}")
+
+
+def get_device_credentials():
+    # Reads credentials for each device from requirements.csv
+    creds = {}
+    try:
+        with open(requirements, newline="") as file:
+            reader = csv.DictReader(file)
+            for row in reader:
+                hostname = row.get("hostname", "").strip()
+                username = row.get("username", "").strip()
+                password = row.get("password", "").strip()
+                if hostname and username and password:
+                    creds[hostname] = {"username": username, "password": password}
+    except Exception as e:
+        print(f"Error reading credentials: {e}")
+    return creds
+
 
 
 # main function 

@@ -47,11 +47,11 @@ def run_test():
         device = functions.get_device_ip(device_name)
 
         if test_type == "connectivity":
-            output = functions.connectivity_check(device, param)
+            output = functions.connectivity_check(device_name, device, param)
         elif test_type == "bgp":
-            output = functions.bgp_neighbors(device)
+            output = functions.bgp_neighbors(device_name, device)
         elif test_type == "route":
-            output = functions.route_finder(device, param)
+            output = functions.route_finder(device_name, device, param)
         else:
             output = "Unknown test selected."
 
