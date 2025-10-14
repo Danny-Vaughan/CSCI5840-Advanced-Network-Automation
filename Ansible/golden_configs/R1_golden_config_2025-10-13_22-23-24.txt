@@ -1,0 +1,103 @@
+! Command: show running-config
+! device: R1 (cEOSLab, EOS-4.28.5M-29792660.4285M (engineering build))
+!
+no aaa root
+!
+username admin role network-admin secret sha512 $6$JkQFayWjSUtIXEGu$g5mtGN5qvcJXX4Bw7aKry3Zm3QRw9w8UPv9aV2KgjqkbMELxl3iZL4tv2k0.LZCvp9JhnjSiCN5f.Mn/6UP/U1
+!
+ip dhcp relay information option
+!
+transceiver qsfp default-mode 4x10G
+!
+service routing protocols model ribd
+!
+logging host 10.10.4.254
+logging host 172.20.20.1
+!
+hostname R1
+!
+snmp-server contact james.vaughan@colorado.edu
+snmp-server location RCN
+snmp-server community public ro
+snmp-server host 10.10.4.254 version 2c public
+!
+spanning-tree mode rstp
+!
+vlan 10,20,30,40,50
+!
+management api gnmi
+   transport grpc default
+!
+interface Ethernet1
+   description Configured by Netmiko
+   no switchport
+!
+interface Ethernet1.40
+   encapsulation dot1q vlan 40
+   ip address 10.10.3.1/28
+   ipv6 address 2104::1/64
+   ipv6 ospf 10 area 0.0.0.0
+!
+interface Ethernet1.50
+   encapsulation dot1q vlan 50
+   ip address 10.10.4.1/24
+   dhcp server ipv4
+!
+interface Ethernet2
+   no switchport
+!
+interface Ethernet2.10
+   encapsulation dot1q vlan 10
+   ip address 10.10.0.1/28
+   ipv6 address 2101::1/64
+   ipv6 ospf 10 area 0.0.0.0
+!
+interface Ethernet2.20
+   encapsulation dot1q vlan 20
+   ip address 10.10.1.1/28
+   ipv6 address 2102::1/64
+   ipv6 ospf 10 area 0.0.0.0
+!
+interface Ethernet2.30
+   encapsulation dot1q vlan 30
+   ipv6 address 2103::1/64
+   ipv6 ospf 10 area 0.0.0.0
+!
+interface Ethernet2.50
+   encapsulation dot1q vlan 50
+   ip address 10.10.40.1/24
+!
+interface Ethernet3
+   description This is a test
+   no switchport
+   ip address 10.20.30.40/24
+   ipv6 address 2001::2/64
+!
+interface Loopback0
+   ip address 10.0.0.1/32
+!
+interface Management0
+   ip address 172.20.20.101/24
+!
+ip routing
+!
+ipv6 unicast-routing
+!
+router ospf 10
+   router-id 10.0.0.1
+   network 10.0.0.1/32 area 0.0.0.0
+   network 10.10.0.0/28 area 0.0.0.0
+   network 10.10.1.0/28 area 0.0.0.0
+   network 10.10.3.0/28 area 0.0.0.0
+   network 10.10.4.0/24 area 0.0.0.0
+   max-lsa 12000
+!
+ipv6 router ospf 10
+   router-id 10.0.0.1
+!
+router rip
+   network 10.10.0.0/28
+   network 10.10.1.0/28
+   no shutdown
+!
+end

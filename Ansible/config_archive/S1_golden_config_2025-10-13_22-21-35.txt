@@ -1,0 +1,53 @@
+! Command: show running-config
+! device: S1 (cEOSLab, EOS-4.28.5M-29792660.4285M (engineering build))
+!
+no aaa root
+!
+username admin role network-admin secret sha512 $6$FoHdYS4EfTtx.gEk$YB0VCen8FDsdiB4j44TyPqZuEmdMmi9FqYBmLTYqJc5bOtrKrm33m6RhzGOvNqtq68YZM1lQmSKedtgcTP9gd1
+!
+transceiver qsfp default-mode 4x10G
+!
+service routing protocols model ribd
+!
+logging host 10.10.4.254
+!
+hostname S1
+!
+snmp-server contact james.vaughan@colorado.edu
+snmp-server location RCN
+snmp-server community public ro
+snmp-server host 10.10.4.254 version 2c public
+!
+spanning-tree mode rstp
+!
+vlan 10,20,30,50
+!
+management api gnmi
+   transport grpc default
+!
+interface Ethernet1
+   switchport mode trunk
+!
+interface Ethernet2
+   description to H1
+   switchport access vlan 10
+!
+interface Ethernet3
+   description to H2
+   switchport access vlan 20
+!
+interface Ethernet4
+   description trunk to S2
+   switchport mode trunk
+!
+interface Management0
+   ip address 172.20.20.201/24
+!
+interface Vlan50
+   ip address 10.10.40.3/24
+!
+no ip routing
+!
+ip route 10.10.4.0/24 10.10.40.1
+!
+end

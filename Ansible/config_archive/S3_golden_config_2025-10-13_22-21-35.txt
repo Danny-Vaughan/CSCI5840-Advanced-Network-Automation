@@ -1,0 +1,53 @@
+! Command: show running-config
+! device: S3 (cEOSLab, EOS-4.28.5M-29792660.4285M (engineering build))
+!
+no aaa root
+!
+username admin role network-admin secret sha512 $6$nSkQ1/A/zJ55ln1l$PGPRAHHiOwuywXsRM5t1712jb0Fage5fF67t3CJ0cVkExvDX341n7uSypvqd3wGEO85W5fEeqEW.1COkykRDR1
+!
+transceiver qsfp default-mode 4x10G
+!
+service routing protocols model ribd
+!
+logging host 10.10.4.254
+logging host 172.20.20.1
+!
+hostname S3
+!
+snmp-server contact james.vaughan@colorado.edu
+snmp-server location RCN
+snmp-server community public ro
+snmp-server host 10.10.4.254 version 2c public
+!
+spanning-tree mode rstp
+!
+vlan 10,20,30,40,50
+!
+management api gnmi
+   transport grpc default
+!
+interface Ethernet1
+   description To R3
+   switchport mode trunk
+!
+interface Ethernet2
+   description To R1
+   switchport mode trunk
+!
+interface Ethernet3
+   description To NMAS
+   switchport access vlan 50
+!
+interface Ethernet4
+   description To S4
+   switchport mode trunk
+!
+interface Management0
+   ip address 172.20.20.203/24
+!
+interface Vlan50
+   ip address 10.10.4.7/24
+!
+no ip routing
+!
+end
