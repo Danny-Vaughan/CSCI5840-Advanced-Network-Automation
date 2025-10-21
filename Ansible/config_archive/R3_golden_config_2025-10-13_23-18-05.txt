@@ -1,0 +1,90 @@
+! Command: show running-config
+! device: R3 (cEOSLab, EOS-4.28.5M-29792660.4285M (engineering build))
+!
+no aaa root
+!
+username admin role network-admin secret sha512 $6$L9bwS9umsUWKmOFO$8ltnDyNxg9j9eUBBqCI5K5KvnCLWK29PyugsYmILSVPEjrDldWvsRL7vz160wHTErxGoJ5Khe0tN2H7SgqIvq.
+!
+transceiver qsfp default-mode 4x10G
+!
+service routing protocols model ribd
+!
+logging host 10.10.4.254
+!
+hostname R3
+!
+snmp-server contact james.vaughan@colorado.edu
+snmp-server location RCN
+snmp-server community public ro
+snmp-server host 10.10.4.254 version 2c public
+!
+spanning-tree mode rstp
+!
+vlan 40,50
+!
+management api gnmi
+   transport grpc default
+!
+interface Ethernet1
+   no switchport
+   ip address 203.0.113.2/30
+   ipv6 address 2111::1/64
+!
+interface Ethernet2
+   no switchport
+   ip address 10.10.0.65/28
+   ipv6 address 2112::1/64
+   ipv6 ospf 10 area 0.0.0.0
+!
+interface Ethernet3
+   no switchport
+!
+interface Ethernet3.40
+   encapsulation dot1q vlan 40
+   ip address 10.10.3.3/28
+   ipv6 address 2104::3/64
+   ipv6 ospf 10 area 0.0.0.0
+!
+interface Ethernet3.50
+   encapsulation dot1q vlan 50
+   ip address 10.10.4.3/24
+!
+interface Loopback0
+   ip address 1.0.0.3/32
+!
+interface Management0
+   ip address 172.20.20.103/24
+!
+ip routing
+!
+ipv6 unicast-routing
+!
+router bgp 65030
+   router-id 1.0.0.3
+   neighbor 1.0.0.5 remote-as 65050
+   neighbor 2111::2 remote-as 65050
+   redistribute ospf
+   redistribute ospfv3
+   !
+   address-family ipv4
+      network 10.0.0.0/8
+   !
+   address-family ipv6
+      neighbor 2111::2 activate
+      network 2111::/64
+      redistribute ospfv3
+!
+router ospf 10
+   router-id 1.0.0.3
+   redistribute bgp
+   network 10.10.3.0/28 area 0.0.0.0
+   network 10.10.4.0/24 area 0.0.0.0
+   max-lsa 12000
+   default-information originate
+!
+ipv6 router ospf 10
+   router-id 1.0.0.3
+   redistribute bgp
+   default-information originate
+!
+end

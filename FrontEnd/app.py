@@ -61,6 +61,26 @@ def run_test():
     devices = ["R1", "R2", "R3", "R4", "S1", "S2", "S3", "S4"]
     return render_template("test_form.html", devices=devices)
 
+@app.route("/unit_tests", methods=["GET", "POST"])
+def unit_tests():
+    """
+    Run unit tests and display documentation about how they work.
+    """
+    coverage_output = ""
+    if request.method == "POST":
+        # Execute the unit_test.py script and capture its stdout
+        try:
+            result = subprocess.run(
+                ["python3", "/home/student/CSCI5840-Advanced-Network-Automation/FrontEnd/unit_test_v2.py"],
+                capture_output=True, text=True
+            )
+            coverage_output = result.stdout
+            flash("Unit tests executed successfully.", "success")
+        except Exception as e:
+            coverage_output = f"Error running unit tests: {e}"
+            flash("Error executing tests.", "danger")
+
+    return render_template("unit_tests.html", coverage_output=coverage_output)
 
 
 if __name__ == "__main__":

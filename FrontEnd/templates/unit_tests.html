@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+{% block content %}
+  <h2 class="mb-3">Unit Testing & Code Coverage</h2>
+
+  <p>
+    This page documents the structure of the unit testing system for the Network Automation front end.
+    Each major Python file (<code>mk_new_play.py</code>, <code>functions.py</code>, <code>main.py</code>,
+    and <code>app.py</code>) is tested by the <code>unit_test.py</code> tool located in
+    the front end directory on the NMAS.
+  </p>
+
+  <hr>
+  <h4>How It Works</h4>
+  <ul>
+    <li>The script uses Python’s <code>unittest</code> module.</li>
+    <li>Each test function is mapped to a function in the main code files.</li>
+    <li>For every passing test, a counter is incremented for its file (e.g., <code>mk_count</code>).</li>
+    <li>At the end, a coverage percentage is calculated per file and overall.</li>
+    <li>The tests check basic behaviors like file creation, form data, YAML output, etc.</li>
+  </ul>
+
+  <h4 class="mt-4">Adding New Unit Tests</h4>
+  <ol>
+    <li>Open <code>unit_test_v2.py</code> in the front end directory.</li>
+    <li>Add a new test method under the correct class (for example <code>TestFunctions</code> for <code>functions.py</code>).</li>
+    <li>Increment the related counter (<code>func_count += 1</code>).</li>
+    <li>At the bottom of the file, update the total count constant for coverage calculation.</li>
+    <li>Reload this page and click “Run Tests” to see the new coverage numbers.</li>
+  </ol>
+
+  <h4 class="mt-4">Code Coverage Calculation</h4>
+  <p>
+    Each test function adds 1 to its module’s counter.
+    The coverage percentage is computed as:
+  </p>
+  <pre><code>coverage = (tested_functions / total_functions) * 100</code></pre>
+  <p>
+    The tool prints a summary for each module and total coverage across all files.
+  </p>
+
+  <hr class="my-4">
+  <h4>Run Unit Tests</h4>
+  <form method="post">
+    <button type="submit" class="btn btn-primary mb-3">Run Tests</button>
+  </form>
+
+  {% if coverage_output %}
+    <div class="card bg-light border-dark p-3">
+      <h5>Test Output:</h5>
+      <pre style="white-space: pre-wrap;">{{ coverage_output }}</pre>
+    </div>
+  {% endif %}
+{% endblock %}
+

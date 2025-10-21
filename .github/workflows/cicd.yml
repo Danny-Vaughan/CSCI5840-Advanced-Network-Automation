@@ -17,7 +17,11 @@ jobs:
         run: sudo python3 /home/student/CSCI5840-Advanced-Network-Automation/Ansible/main.py
 
       - name: Run unit test script
-        run: sudo python3 /home/student/CSCI5840-Advanced-Network-Automation/Scripts/Tools/unit_test.py
+        run: sudo python3 /home/student/CSCI5840-Advanced-Network-Automation/FrontEnd/unit_test.py
+        continue-on-error: true
+
+      - name: Run unit test script
+        run: sudo python3 /home/student/CSCI5840-Advanced-Network-Automation/FrontEnd/unit_test_v2.py
         continue-on-error: true
 
       - name: Run backout

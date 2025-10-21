@@ -197,16 +197,21 @@ def route_finder(hostname, man_ip, search_term):
         return f"Error: {e}"
 
 # Device selection for health check portal
-devices = {
-    "R1": "172.20.20.101",
-    "R2": "172.20.20.102",
-    "R3": "172.20.20.103",
-    "R4": "172.20.20.104",
-    "S1": "172.20.20.201",
-    "S2": "172.20.20.202",
-    "S3": "172.20.20.203",
-    "S4": "172.20.20.204"
-}
+def get_devices():
+    # Reads hostname/mgmt IP for each device from requirements.csv
+    devices = {}
+    try:
+        with open(requirements, newline="") as file:
+            reader = csv.DictReader(file)
+            for row in reader:
+                hostname = row.get("hostname", "").strip()
+                management_ip = row.get("management_ip", "").strip()
+                if hostname and management_ip:
+                    devices[hostname] = management_ip
+    except Exception as e:
+        print(f"Error reading management info: {e}")
+    return devices
+devices = get_devices()
 
 def get_all_devices():
     return list(devices.keys())
